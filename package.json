@@ -1,0 +1,15 @@
+{
+  "name": "buscadordecomics",
+  "version": "1.0.0",
+  "description": "Buscador de comics usando la api de marvel",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "sass": "sass --watch scss/style.scss css/style.css" 
+  },
+  "author": "Angeles Godoy",
+  "license": "ISC",
+  "dependencies": {
+    "sass": "^1.54.9"
+  }
+}
