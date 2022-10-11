@@ -95,14 +95,14 @@
   animation: rotate 2s linear infinite;
 }
 
-/**********ENCBEADO MARVEL**********/
+/**********ENCABEZADO MARVEL**********/
 * {
   box-sizing: border-box;
 }
 body {
   margin: 0;
-  background-color: #e12835;
-  background-image: radial-gradient(#e12835 20%, #be2633 50%, rgba(0, 0, 0, .5) 100%);
+  /* background-color: #e12835; */
+  /* background-image: radial-gradient(#e12835 20%, #be2633 50%, rgba(0, 0, 0, .5) 100%); */
   background-size: 120%;
   background-position: center;
   font-family: 'Barlow Condensed', sans-serif;
