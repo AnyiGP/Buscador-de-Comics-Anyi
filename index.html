@@ -14,7 +14,10 @@
       href="https://fonts.googleapis.com/icon?family=Material+Icons"
       rel="stylesheet"
     />
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
 
     <link
       rel="stylesheet"
@@ -25,22 +28,23 @@
   </head>
   <body>
     <header>
-
-    <div class="wrapper run-animation" id="animate">
-      <div class="logo">
-    
-        <span class="marvel">Buscador</span>
-        <span class="studios">de comics</span>
-    
+      <div class="wrapper run-animation" id="animate">
+        <div class="logo">
+          <span class="marvel">Buscador</span>
+          <span class="studios">de comics</span>
+        </div>
       </div>
-    </div>
-    
-    <div class="images"><img src="https://i1.wp.com/hipertextual.com/wp-content/uploads/2018/12/marvel.jpg?fit=1200%2C799&ssl=1" alt="" style="width: 100vw;"></div>
 
-  </header>
-    
-    
-<!--/////////////////////////////////////////////////////////////////////////-->
+      <div class="images">
+        <img
+          src="https://i1.wp.com/hipertextual.com/wp-content/uploads/2018/12/marvel.jpg?fit=1200%2C799&ssl=1"
+          alt=""
+          style="width: 100vw"
+        />
+      </div>
+    </header>
+
+    <!--/////////////////////////////////////////////////////////////////////////-->
 
     <!-- <nav>
       <div class="nav-wrapper color-black">
@@ -48,8 +52,8 @@
         <ul class="right hide-on-med-and-down">
           <li><a href="sass.html">Sass</a></li>
           <li><a href="badges.html">Components</a></li> -->
-          <!-- Dropdown Trigger -->
-          <!-- <li>
+    <!-- Dropdown Trigger -->
+    <!-- <li>
             <a class="dropdown-trigger" href="#!" data-target="dropdown1"
               >Genero<i class="material-icons right">arrow_drop_down</i></a
             >
@@ -58,37 +62,56 @@
       </div>
     </nav> -->
 
-<!--///////////////////////////////////INPUT//////////////////////////////////////-->
-
     
-<!--///////////////////SELECT //////////////////////////////////////-->
-    <!-- Dropdown Structure -->
-    <!-- <ul id="dropdown1" class="dropdown-content">
-      <li><a id="todos" href="#!">Todos</a></li>
-      <li><a id="mujer" href="#!">Mujer</a></li>
-      <li><a id="hombre" href="#!">Hombre</a></li> -->
-      <!-- <li class="divider"></li> -->
-      <!-- <li><a href="#!">three</a></li> -->
-    <!-- </ul> -->
-    
-<!--/////////////////////BUSCADOR//////////////////////////////////////////////////-->
+    <!--/////////////////////BUSCADOR//////////////////////////////////////////////////-->
 
+    <div class="row contenedorBusquedaFiltros">
 
-
-    <div class="row">
-      <form class="col s12">
-        <h3>Búsqueda</h3>
+      <!--///////////////////////////////////INPUT//////////////////////////////////////-->
+  
+      <div class="col s12 m6 l6">
         <div class="row">
-          <div class="input-field col s6">
-            <i class="material-icons">search</i>
-            <textarea id="icon_prefix2" class="materialize-textarea"></textarea>
-            <label for="icon_prefix2"></label>
+          <h5 class="margenIzq">Ingresa Tu Búsqueda</h5> 
+          <div class="input-field col s12 m10">
+            <i class="material-icons prefix">search</i>
+            <input type="text" id="autocomplete-input" class="autocomplete">
+            <label for="autocomplete-input">Ingresa tu búsqueda</label>
           </div>
         </div>
-      </form>
+      </div>
+
+        <!--///////////////////SELECT TIPO//////////////////////////////////////-->
+
+      <div class="col s12 m6 l2 valign-wrapper margen">
+        <label for=""></label>
+        <span class="span">Tipo</span>
+        <select class="browser-default selectComic">
+            <option id="quieroCominc" value="" disabled selected>Comics</option>
+            <option id="quieroPersonaje" value="">Personaje</option>
+        </select>
+      </div>
+
+      
+        <!--///////////////////SELECT ORDEN //////////////////////////////////////-->
+
+      <div class="col s12 m6 l2 valign-wrapper margen"><label for=""></label>
+        <span class="span">Orden</span>
+        <select class="browser-default selectComic">
+            <option id="quieroAZ" value="" disabled selected>A-Z</option>
+            <option id="quieroZA" value="">Z-A</option>
+            <option id="quieroMasViejo" value="">Mas Viejo</option>
+            <option id="quieroMasNuevo" value="">Mas Nuevo</option>
+        </select>
+      </div>
+
+
+        <!--///////////////////BOTON BUSCAR //////////////////////////////////////-->
+
+      <div class="col s12 m6 l2 margen"><a class="valign-wrapper waves-effect waves-light btn-small #000000 black">BUSCAR</a></div>
     </div>
 
-<!--///////////////////////////////////LODER//////////////////////////////////////-->
+
+    <!--///////////////////////////////////LODER//////////////////////////////////////-->
 
     <div class="container-fluid">
       <div id="contenedor" class="contenedor">
@@ -97,7 +120,7 @@
       <div id="root" class="row"></div>
     </div>
 
-<!--///////////////////////////////////PAGINADOR//////////////////////////////////////-->
+    <!--///////////////////////////////////PAGINADOR//////////////////////////////////////-->
     <div class="container-paginador">
       <p>Pagina Actual: <span id="pagina-actual"></span></p>
       <span>Total de paginas: <span id="total-paginas"></span></span>
@@ -138,8 +161,7 @@
       </button>
     </div>
 
-    
-<!--///////////////////////////////FOOTER//////////////////////////////////////////-->
+    <!--///////////////////////////////FOOTER//////////////////////////////////////////-->
 
     <footer class="page-footer color-black">
       <div class="container">
