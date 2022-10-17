@@ -18,6 +18,14 @@ const loader = document.getElementById('contenedor')
 //API marvel
 const apiPublic = '7c06533ff513d1f2219290cbe4e49e20'
 const apiPrivate = 'cad2a3938979fe8b84a5c8ba91a7d37810873c88'
+const baseURL = 'http://gateway.marvel.com/v1/public' // base de la api a la que le voy a ir agregando end point para pedirle lo que valla necesitando////////
+let offset = 0;
+
+const obtenerParamDeBusqueda = (paramDeBusqueda) => {
+  let buscarParam = `?apikey=${apiPublic}&offset${offset}`
+}
+
+////////BUSCAR EL SELECT DE COMIC O PERSONAJE
 
 
 const getData = async () => {
@@ -27,6 +35,7 @@ const getData = async () => {
         root.classList.remove('esconder')
       },2000)
       
+
   const url = `http://gateway.marvel.com/v1/public/comics?apikey=${apiPublic}`;
   fetch(url)
     .then(resp => resp.json())
