@@ -2,6 +2,12 @@
 // const mujer = document.getElementById("mujer");
 // const hombre = document.getElementById("hombre");
 // const todos = document.getElementById("todos");
+const selectTipo = document.querySelector("#selectTipo");
+const selectOrden = document.querySelector("#selectOrden");
+
+
+//FX PARA TRAER LOS ELEMENTOS, POR EJEMPLO EL SELECT TIPO//
+const traerElemento = (elemento) => document.querySelector(elemento);
 
 // //paginador
 // const paginaActual = document.querySelector("#pagina-actual");
@@ -12,59 +18,71 @@
 // const lastPage = document.querySelector("#last-page");
 
 // //LOADER
-const loader = document.getElementById('contenedor')
-
+const loader = document.getElementById("contenedor");
 
 //API marvel
-const apiPublic = '7c06533ff513d1f2219290cbe4e49e20'
-const apiPrivate = 'cad2a3938979fe8b84a5c8ba91a7d37810873c88'
-const baseURL = 'http://gateway.marvel.com/v1/public' // base de la api a la que le voy a ir agregando end point para pedirle lo que valla necesitando////////
+const apiPublic = "7c06533ff513d1f2219290cbe4e49e20";
+const apiPrivate = "cad2a3938979fe8b84a5c8ba91a7d37810873c88";
+const baseURL = "http://gateway.marvel.com/v1/public/"; // base de la api a la que le voy a ir agregando end point para pedirle lo que valla necesitando////////
 let offset = 0;
 
 const obtenerParamDeBusqueda = (paramDeBusqueda) => {
-  let buscarParam = `?apikey=${apiPublic}&offset${offset}`
-}
+  let url = baseURL;
+  let buscarParam = `?apikey=${apiPublic}&offset=${offset}`;
 
-////////BUSCAR EL SELECT DE COMIC O PERSONAJE
+  //BUSCO EL SELECT DE COMIC O PERSONAJE
+  // const tipo = traerElemento('#selectTipo').value
+  // console.log(tipo)
 
+  if (selectTipo.value === "comics") {
+    url += selectTipo.value + buscarParam;
+  }
+  fetch(url)
+    .then((resp) => resp.json())
+    .then((json) => console.log(json))
+    .catch((err) => console.error(err));
+};
+
+obtenerParamDeBusqueda();
 
 const getData = async () => {
-  loader.classList.remove('esconder')
+  loader.classList.remove("esconder");
   setTimeout(() => {
-        loader.classList.add('esconder')
-        root.classList.remove('esconder')
-      },2000)
-      
+    loader.classList.add("esconder");
+    root.classList.remove("esconder");
+  }, 2000);
 
   const url = `http://gateway.marvel.com/v1/public/comics?apikey=${apiPublic}`;
   fetch(url)
-    .then(resp => resp.json())
-    .then(json => console.log(json))
-    .catch(err => console.error(err))
-}
-getData()
+    .then((resp) => resp.json())
+    .then((json) => console.log(json))
+    .catch((err) => console.error(err));
+};
+getData();
 
 element = document.getElementById("animate");
 
 if (element) {
-	// reset the transition by...
-	element.addEventListener("click", function(e) {
-		e.preventDefault;
+  // reset the transition by...
+  element.addEventListener(
+    "click",
+    function (e) {
+      e.preventDefault;
 
-		console.log('element', element.classList);
+      console.log("element", element.classList);
 
-		// removing the class
-		element.classList.remove("run-animation");
+      // removing the class
+      element.classList.remove("run-animation");
 
-		// triggering reflow
-		void element.offsetWidth;
+      // triggering reflow
+      void element.offsetWidth;
 
-		// and re-adding the class
-		element.classList.add("run-animation");
-	}, false);
+      // and re-adding the class
+      element.classList.add("run-animation");
+    },
+    false
+  );
 }
-
-
 
 // //   //NUEVA FUNCION PARA HACER LO DEL PAGINADOR
 
@@ -103,7 +121,7 @@ if (element) {
 //   arr.forEach((personaje) => {
 //     const { name, gender, species, status, origin, location, image } =
 //       personaje;
-//     card += `  
+//     card += `
 //       <div class="col s12 m6 l3">
 //         <div class="card">
 //           <div class="card-image">

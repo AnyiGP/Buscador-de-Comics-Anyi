@@ -62,59 +62,77 @@
       </div>
     </nav> -->
 
-    
     <!--/////////////////////BUSCADOR//////////////////////////////////////////////////-->
 
     <div class="row contenedorBusquedaFiltros">
-
+      
       <!--///////////////////////////////////INPUT//////////////////////////////////////-->
-  
+
       <div class="col s12 m6 l6">
         <div class="row">
-          <h5 class="margenIzq">Ingresa Tu Búsqueda</h5> 
+          <h5 class="margenIzq">Ingresa Tu Búsqueda</h5>
           <div class="input-field col s12 m10">
             <i class="material-icons prefix">search</i>
-            <input type="text" id="autocomplete-input" class="autocomplete">
+            <input type="text" id="autocomplete-input" class="autocomplete" />
             <label for="autocomplete-input">Ingresa tu búsqueda</label>
           </div>
         </div>
       </div>
 
-        <!--///////////////////SELECT TIPO//////////////////////////////////////-->
+      <!--///////////////////SELECT TIPO//////////////////////////////////////-->
 
       <div class="col s12 m6 l2 valign-wrapper margen">
         <label for=""></label>
         <span class="span">Tipo</span>
-        <select class="browser-default selectComic">
-            <option id="quieroCominc" value="" disabled selected>Comics</option>
-            <option id="quieroPersonaje" value="">Personaje</option>
+        <select name="tipo" id="selectTipo" class="browser-default selectComic">
+          <option value="comics">Comics</option>
+          <option value="personajes">Personajes</option>
         </select>
       </div>
 
-      
-        <!--///////////////////SELECT ORDEN //////////////////////////////////////-->
+      <!--///////////////////SELECT ORDEN //////////////////////////////////////-->
 
-      <div class="col s12 m6 l2 valign-wrapper margen"><label for=""></label>
+      <div class="col s12 m6 l2 valign-wrapper margen">
+        <label for=""></label>
         <span class="span">Orden</span>
         <select class="browser-default selectComic">
-            <option id="quieroAZ" value="" disabled selected>A-Z</option>
-            <option id="quieroZA" value="">Z-A</option>
-            <option id="quieroMasViejo" value="">Mas Viejo</option>
-            <option id="quieroMasNuevo" value="">Mas Nuevo</option>
+          <option id="quieroAZ" value="" >A-Z</option>
+          <option id="quieroZA" value="">Z-A</option>
+          <option id="quieroMasViejo" value="">Mas Viejo</option>
+          <option id="quieroMasNuevo" value="">Mas Nuevo</option>
         </select>
       </div>
 
+      <!--///////////////////BOTON BUSCAR //////////////////////////////////////-->
 
-        <!--///////////////////BOTON BUSCAR //////////////////////////////////////-->
-
-      <div class="col s12 m6 l2 margen"><a class="valign-wrapper waves-effect waves-light btn-small #000000 black">BUSCAR</a></div>
+      <div class="col s12 m6 l2 margen">
+        <a
+          class="valign-wrapper waves-effect waves-light btn-small #000000 black"
+          >BUSCAR</a
+        >
+      </div>
     </div>
 
+    <div id="contenedorResultados">
+      <h5>RESULTADOS</h5>
+      <div id="cantidadDeResultados"> RESULTADOS</div>
+      
+      <!-- //////////////////////CARDS////////////////////// -->
+      
+      <div id="contenedorCards">
+      
+
+      </div>
+
+
+    </div>
+
+    
 
     <!--///////////////////////////////////LODER//////////////////////////////////////-->
 
     <div class="container-fluid">
-      <div id="contenedor" class="contenedor">
+      <div id="contenedorCards" class="contenedorCards">
         <span class="loader"></span>
       </div>
       <div id="root" class="row"></div>

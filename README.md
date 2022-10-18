@@ -2,7 +2,7 @@
 ### > Alumna _Angeles_ _Godoy
 
 ## BUSCADOR DE COMICS
-> Este es el tercer proyecto realizado con **HTML, CSS (SASS), JASON, JS** desde _cero_
+> Este es el cuarto proyecto realizado con **HTML, CSS, SASS, JS, JSON** desde _cero_
 > Se trata de una aplicación que permite al usuario a buscar informacion sobre comics...
 
 > Podrás mi proceso de aprendizaje en la carrera de Desarrollo Frontend de **ADA itw**
