@@ -118,6 +118,13 @@ const search = () => {
   }
 };
 
+//LOADER//
+loader.classList.remove("esconder");
+  setTimeout(() => {
+    loader.classList.add("esconder");
+    results.classList.remove("esconder");
+  }, 2000);
+
 //PINTAR COMICS//
 
 //buscamos donde lo vamos a pintar los resultados y el total
