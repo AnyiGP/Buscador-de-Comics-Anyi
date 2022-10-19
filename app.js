@@ -22,7 +22,7 @@ const loader = document.getElementById("contenedor");
 //API marvel
 const apiPublic = "7c06533ff513d1f2219290cbe4e49e20";
 const apiPrivate = "cad2a3938979fe8b84a5c8ba91a7d37810873c88";
-const baseURL = "http://gateway.marvel.com/v1/public/"; // base de la api a la que le voy a ir agregando end point para pedirle lo que valla necesitando////////
+const baseURL = "https://gateway.marvel.com/v1/public/"; // base de la api a la que le voy a ir agregando end point para pedirle lo que valla necesitando////////
 let offset = 0; //que empiece en 0
 
 ////////////////////////////////////////////////////////
@@ -152,7 +152,7 @@ const printComics = (comics) => {
     };
     comicCard.innerHTML = `
     
-    <div class="col s12 m6 l3">
+    <div class="col s12 m3">
       <div class="card">
         <div class="card-image">
           <img src="${comic.thumbnail.path}/portrait_uncanny.${comic.thumbnail.extension}" alt="${comic.title}" class="comic-thumbnail">
