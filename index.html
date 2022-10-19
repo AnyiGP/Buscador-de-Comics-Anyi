@@ -65,9 +65,9 @@
     <!--/////////////////////BUSCADOR//////////////////////////////////////////////////-->
 
     <div class="row contenedorBusquedaFiltros">
-      
       <!--///////////////////////////////////INPUT//////////////////////////////////////-->
 
+      
       <div class="col s12 m6 l6">
         <div class="row">
           <h5 class="margenIzq">Ingresa Tu Búsqueda</h5>
@@ -96,7 +96,7 @@
         <label for=""></label>
         <span class="span">Orden</span>
         <select class="browser-default selectComic">
-          <option id="quieroAZ" value="" >A-Z</option>
+          <option id="quieroAZ" value="">A-Z</option>
           <option id="quieroZA" value="">Z-A</option>
           <option id="quieroMasViejo" value="">Mas Viejo</option>
           <option id="quieroMasNuevo" value="">Mas Nuevo</option>
@@ -115,29 +115,28 @@
 
     <div id="contenedorResultados">
       <h5>RESULTADOS</h5>
-      <div id="cantidadDeResultados"> RESULTADOS</div>
-      
-      <!-- //////////////////////CARDS////////////////////// -->
-      
-      <div id="contenedorCards">
-      
-
+      <div id="cantidadDeResultados">RESULTADOS</div>
+      <div class="container-fluid">
+        <div id="results" class="row">
+        </div>
+        <div id="contenedor" class="contenedor">
+          <span class="loader"></span>
+        </div>
+        
       </div>
-
-
+  
     </div>
 
+      <!-- //////////////////////CARDS////////////////////// -->
+
+      <!-- <div id="contenedorCards" class="comic">
+        <div class="col s12 m6 l3">
     
+      </div>
+    </div> -->
 
     <!--///////////////////////////////////LODER//////////////////////////////////////-->
-
-    <div class="container-fluid">
-      <div id="contenedorCards" class="contenedorCards">
-        <span class="loader"></span>
-      </div>
-      <div id="root" class="row"></div>
-    </div>
-
+    
     <!--///////////////////////////////////PAGINADOR//////////////////////////////////////-->
     <div class="container-paginador">
       <p>Pagina Actual: <span id="pagina-actual"></span></p>

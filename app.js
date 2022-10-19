@@ -1,10 +1,9 @@
-// const root = document.getElementById("root");
+const root = document.getElementById("root");
 // const mujer = document.getElementById("mujer");
 // const hombre = document.getElementById("hombre");
 // const todos = document.getElementById("todos");
 const selectTipo = document.querySelector("#selectTipo");
 const selectOrden = document.querySelector("#selectOrden");
-
 
 //FX PARA TRAER LOS ELEMENTOS, POR EJEMPLO EL SELECT TIPO//
 const traerElemento = (elemento) => document.querySelector(elemento);
@@ -24,41 +23,155 @@ const loader = document.getElementById("contenedor");
 const apiPublic = "7c06533ff513d1f2219290cbe4e49e20";
 const apiPrivate = "cad2a3938979fe8b84a5c8ba91a7d37810873c88";
 const baseURL = "http://gateway.marvel.com/v1/public/"; // base de la api a la que le voy a ir agregando end point para pedirle lo que valla necesitando////////
-let offset = 0;
+let offset = 0; //que empiece en 0
 
-const obtenerParamDeBusqueda = (paramDeBusqueda) => {
-  let url = baseURL;
+////////////////////////////////////////////////////////
+// const obtenerParamDeBusqueda = (paramDeBusqueda) => {
+//   let url = baseURL;
+//   let buscarParam = `?apikey=${apiPublic}&offset=${offset}`;
+
+//   //BUSCO EL SELECT DE COMIC O PERSONAJE
+//   // const tipo = traerElemento('#selectTipo').value
+//   // console.log(tipo)
+
+//   if (selectTipo.value === "comics") {
+//     url += selectTipo.value + buscarParam; //traigo data de tipo comic o personaje
+//   }
+//   fetch(url)
+//     .then((resp) => resp.json())
+//     .then((json) => console.log(json))
+//     .catch((err) => console.error(err));
+// };
+
+// obtenerParamDeBusqueda();
+
+// const getData = async () => {
+//   loader.classList.remove("esconder");
+//   setTimeout(() => {
+//     loader.classList.add("esconder");
+//     root.classList.remove("esconder");
+//   }, 2000);
+
+//   const url = `http://gateway.marvel.com/v1/public/comics?apikey=${apiPublic}`;
+//   fetch(url)
+//     .then((resp) => resp.json())
+//     .then((json) => console.log(json))
+//     .catch((err) => console.error(err));
+// };
+// getData();
+
+///////////////////ES LO MISMO DE ARRIBA PERO DE OTRA MANERA///////////////////////
+//una fx que haga el fetch/buscar que reciba hasta 3 parámetros
+//fx que me una la url recurso1 + recurso2 + recurso3
+//serch/busqueda
+
+const obtenerParamDeBusqueda = (isSearch) => {
+  //seacrhParams
   let buscarParam = `?apikey=${apiPublic}&offset=${offset}`;
 
-  //BUSCO EL SELECT DE COMIC O PERSONAJE
-  // const tipo = traerElemento('#selectTipo').value
-  // console.log(tipo)
-
-  if (selectTipo.value === "comics") {
-    url += selectTipo.value + buscarParam;
+  if (!isSearch) {
+    return buscarParam;
   }
-  fetch(url)
-    .then((resp) => resp.json())
-    .then((json) => console.log(json))
-    .catch((err) => console.error(err));
+  return buscarParam;
+};
+// get api url
+const obtenerURL = (resourse, resourseID, subResourse) => {
+  const isSearch = !resourseID && !subResourse; //si no te cae nada en estos dos par'ametros hac'e lo sgte.
+  console.log(isSearch); //true
+
+  let url = `${baseURL}${resourse}`;
+
+  if (resourseID) {
+    url += `/${resourseID}`;
+  }
+
+  if (subResourse) {
+    url += `/${subResourse}`;
+  }
+
+  url += obtenerParamDeBusqueda(isSearch);
+  return url;
 };
 
-obtenerParamDeBusqueda();
-
-const getData = async () => {
-  loader.classList.remove("esconder");
-  setTimeout(() => {
-    loader.classList.add("esconder");
-    root.classList.remove("esconder");
-  }, 2000);
-
-  const url = `http://gateway.marvel.com/v1/public/comics?apikey=${apiPublic}`;
-  fetch(url)
-    .then((resp) => resp.json())
-    .then((json) => console.log(json))
-    .catch((err) => console.error(err));
+const fetchURL = async (url) => {
+  const response = await fetch(url);
+  const json = await response.json();
+  return json; //me trae la data completa, como un objeto
 };
-getData();
+
+const tipo = traerElemento("#selectTipo").value;
+// console.log(tipo)
+
+//BUSCO COMIC
+fetchComics = async () => {
+  const {
+    data: { results, total }, //traigo estos 2 params desde la data
+  } = await fetchURL(obtenerURL("comics")); //fx dentro de fx
+  // console.log(data)
+  printComics(results);
+  // console.log(total)
+};
+
+const search = () => {
+  if (tipo === "comics") {
+    fetchComics();
+  }
+};
+
+//PINTAR COMICS//
+
+//buscamos donde lo vamos a pintar los resultados y el total
+const results = traerElemento("#results");
+console.log(cantidadDeResultados);
+
+const printComics = (comics) => {
+  if (comics.length === 0) {
+    results.innerHTML =
+      '<h2 class="sin-resultado">No se encontraron resultados para el pedido</h2>';
+  }
+
+  //FOR OF ENTRE UN FOR Y UN FOR EACH, SE USA PARA ARREGLOS
+  //variable iteratora comics/iterator
+  for (const comic of comics) {
+    console.log(comic); //va a traer el objeto por cada personaje
+    // const comicCard = document.createElement("div");
+    const comicCard = document.createElement("div");
+
+    comicCard.tabIndex = 0;
+    comicCard.classList.add("comic");
+    //le doy un evento
+    comicCard.onclick = () => {
+      console.log(comic, comic.id);
+    };
+    comicCard.innerHTML = `
+    
+    <div class="col s12 m6 l3">
+      <div class="card">
+        <div class="card-image">
+          <img src="${comic.thumbnail.path}/portrait_uncanny.${comic.thumbnail.extension}" alt="${comic.title}" class="comic-thumbnail">
+        </div>
+        <div class="card-content">
+          <p>Nombre: ${comic.title}</p>
+        </div>
+        <div class="card-action">
+          <a href="#">ver mas...</a>
+        </div>
+      </div>
+    </div>
+
+    `;
+    results.append(comicCard);
+  }
+};
+
+//INICIO//
+const inicio = () => {
+  search();
+};
+
+window.onload = inicio;
+
+/////////////////////////ANIMACION////////////////////////////////
 
 element = document.getElementById("animate");
 
@@ -145,6 +258,45 @@ if (element) {
 //   root.innerHTML = card;
 // };
 
+// const printData = (json) => {
+//   // console.log(json); //  []
+//   const arr = json;
+//   let card = "";
+//   arr.forEach((personaje) => {
+//     const { name, gender, species, status, origin, location, thumbnail } =
+//       personaje;
+//     card += `
+//       <div class="col s12 m6 l3">
+//         <div class="card">
+//           <div class="card-image">
+//             <img src=${thumbnail.path}${thumbnail.extension} alt=${name}>
+//           </div>
+//           <div class="card-content">
+//             <p>Nombre: ${name}</p>
+//             <p>Genero: ${gender}</p>
+//             <p>Species: ${species}</p>
+//             <p>Status: ${status}</p>
+//             <p>Origin: ${origin.name}</p>
+//             <p>Location: ${location.name}</p>
+//           </div>
+//           <div class="card-action">
+//             <a href="#">ver mas...</a>
+//           </div>
+//         </div>
+//       </div>
+//     `;
+//   });
+//   root.innerHTML = card;
+//   console.log(card);
+// };
+
+// console.log(printData);
+
+$(document).ready(function () {
+  $(".dropdown-trigger").dropdown();
+  // pagination(getData2());
+});
+
 // //Fx CON LA QUE FUNCIONAN LOS FILTROS ES LO MISMO QUE LA DE ARRIBA PERO SIN PAGINADOR, 24-8
 
 // // const getData = async () => {
@@ -230,8 +382,3 @@ if (element) {
 //     lastPage.disabled = false;
 //   }
 // };
-
-$(document).ready(function () {
-  $(".dropdown-trigger").dropdown();
-  // pagination(getData2());
-});
