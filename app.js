@@ -61,9 +61,6 @@ let offset = 0; //que empiece en 0
 // getData();
 
 ///////////////////ES LO MISMO DE ARRIBA PERO DE OTRA MANERA///////////////////////
-//una fx que haga el fetch/buscar que reciba hasta 3 parámetros
-//fx que me una la url recurso1 + recurso2 + recurso3
-//serch/busqueda
 
 const obtenerParamDeBusqueda = (isSearch) => {
   //seacrhParams
@@ -74,9 +71,13 @@ const obtenerParamDeBusqueda = (isSearch) => {
   }
   return buscarParam;
 };
+
+//una fx que haga el fetch/buscar que reciba hasta 3 parámetros
+//fx que me una la url recurso1 + recurso2 + recurso3
+//serch/busqueda
 // get api url
 const obtenerURL = (resourse, resourseID, subResourse) => {
-  const isSearch = !resourseID && !subResourse; //si no te cae nada en estos dos par'ametros hac'e lo sgte.
+  const isSearch = !resourseID && !subResourse; //si no te cae nada en estos dos paras hace lo sgte.
   console.log(isSearch); //true
 
   let url = `${baseURL}${resourse}`;
@@ -93,6 +94,15 @@ const obtenerURL = (resourse, resourseID, subResourse) => {
   return url;
 };
 
+//PINTAR NUMERO DE RESULTADOS//
+const numResultado = traerElemento("#numResultado");
+let resultCount = 0
+
+const actualizarResultados = count => {
+  numResultado.innerHTML = count //creo let resultCount que inicie en 0
+  resultCount = count
+}
+
 const fetchURL = async (url) => {
   const response = await fetch(url);
   const json = await response.json();
@@ -107,9 +117,12 @@ fetchComics = async () => {
   const {
     data: { results, total }, //traigo estos 2 params desde la data
   } = await fetchURL(obtenerURL("comics")); //fx dentro de fx
-  // console.log(data)
   printComics(results);
+  
   // console.log(total)
+  //updateResultsCount
+  actualizarResultados(total)
+
 };
 
 const search = () => {
