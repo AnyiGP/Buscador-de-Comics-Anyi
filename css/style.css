@@ -329,4 +329,8 @@ header {
   height: 26vh;
 }
 
+.containerDetalles {
+  display: flex;
+}
+
 /*# sourceMappingURL=style.css.map */

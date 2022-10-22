@@ -179,7 +179,7 @@ fetchComicsId = async (comicId) => {
   } = await fetchURL(obtenerURL("comics", comicId)); //fx dentro de fx
   console.log(comic);
   //CARGAMOS LA URL PARA TRAER LA IMAGEN A LA TARJETA QUE DETALLA LA INFO coverPath
-  const imgComic = `${comic.thumbnail.path}.${comic.thumbnail.extension}`;
+  const imgComic = `${comic.thumbnail.path}/portrait_uncanny.${comic.thumbnail.extension}`;
   //releaseDate
   const fecha = `12/01/1984`;
   //writers
@@ -203,7 +203,7 @@ const titulo = traerElemento("#titulo");
 const fechaDePublicacion = traerElemento("#fechaDePublicacion");
 const guionistas = traerElemento("#guionistas");
 const detalles = traerElemento("#detalles");
-const seccionDetallesComic = traerElemento('#seccionDetallesComic')
+const seccionDetallesComic = traerElemento("#seccionDetallesComic");
 
 const actualizarDetallesDeComic = (
   imgComic,
@@ -220,12 +220,10 @@ const actualizarDetallesDeComic = (
   detalles.innerHTML = description;
 };
 
-
-//FILTROS 
+//FILTROS
 // const ordenarPor = document.getElementById("ordenar-por");
 
 // ordenarPor.addEventListener("change", () => {
-
 
 //A/Z
 
@@ -252,21 +250,19 @@ const actualizarDetallesDeComic = (
 // pintarOperaciones(operaciones);
 //ORDENAR POR
 
-  //MAS RECIENTE
-  // if (ordenarPor.value === "mas-reciente") {
-  //   operaciones.sort((a, b) => new Date(b.fecha) - new Date(a.fecha));
-  // }
-  // pintarOperaciones(operaciones);
+//MAS RECIENTE
+// if (ordenarPor.value === "mas-reciente") {
+//   operaciones.sort((a, b) => new Date(b.fecha) - new Date(a.fecha));
+// }
+// pintarOperaciones(operaciones);
 
-  // //MENOS RECIENTE
-  // if (ordenarPor.value === "menos-reciente") {
-  //   operaciones.sort((a, b) => new Date(a.fecha) - new Date(b.fecha));
-  // }
-  // pintarOperaciones(operaciones);
+// //MENOS RECIENTE
+// if (ordenarPor.value === "menos-reciente") {
+//   operaciones.sort((a, b) => new Date(a.fecha) - new Date(b.fecha));
+// }
+// pintarOperaciones(operaciones);
 
 // });
-
-
 
 const search = () => {
   if (tipo === "comics") {
@@ -280,8 +276,6 @@ setTimeout(() => {
   loader.classList.add("esconder");
   results.classList.remove("esconder");
 }, 2000);
-
-
 
 //2.37hs
 //INICIO//
