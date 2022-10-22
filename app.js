@@ -96,12 +96,12 @@ const obtenerURL = (resourse, resourseID, subResourse) => {
 
 //PINTAR NUMERO DE RESULTADOS//
 const numResultado = traerElemento("#numResultado");
-let resultCount = 0
+let resultCount = 0;
 
-const actualizarResultados = count => {
-  numResultado.innerHTML = count //creo let resultCount que inicie en 0
-  resultCount = count
-}
+const actualizarResultados = (count) => {
+  numResultado.innerHTML = count; //creo let resultCount que inicie en 0
+  resultCount = count; //count es un param/total que le paso como argumento total que se ejecuta mas abajo
+};
 
 const fetchURL = async (url) => {
   const response = await fetch(url);
@@ -118,28 +118,13 @@ fetchComics = async () => {
     data: { results, total }, //traigo estos 2 params desde la data
   } = await fetchURL(obtenerURL("comics")); //fx dentro de fx
   printComics(results);
-  
+
   // console.log(total)
   //updateResultsCount
-  actualizarResultados(total)
-
+  actualizarResultados(total);
 };
-
-const search = () => {
-  if (tipo === "comics") {
-    fetchComics();
-  }
-};
-
-//LOADER//
-loader.classList.remove("esconder");
-  setTimeout(() => {
-    loader.classList.add("esconder");
-    results.classList.remove("esconder");
-  }, 2000);
 
 //PINTAR COMICS//
-
 //buscamos donde lo vamos a pintar los resultados y el total
 const results = traerElemento("#results");
 console.log(cantidadDeResultados);
@@ -154,7 +139,6 @@ const printComics = (comics) => {
   //variable iteratora comics/iterator
   for (const comic of comics) {
     console.log(comic); //va a traer el objeto por cada personaje
-    // const comicCard = document.createElement("div");
     const comicCard = document.createElement("div");
 
     comicCard.tabIndex = 0;
@@ -162,6 +146,7 @@ const printComics = (comics) => {
     //le doy un evento
     comicCard.onclick = () => {
       console.log(comic, comic.id);
+      fetchComicsId(comic.id); //ejecuto esta función para que me de el id de cada comic, la función está mas abajo, le paso el agumento comic y comic id
     };
     comicCard.innerHTML = `
     
@@ -184,6 +169,121 @@ const printComics = (comics) => {
   }
 };
 
+//INGRESAR AL COMIC SELECCIONADO Y TRAER INFORMACIÓN//
+fetchComicsId = async (comicId) => {
+  console.log(comicId);
+  const {
+    data: {
+      results: [comic],
+    }, //traigo estos 2 params desde la data
+  } = await fetchURL(obtenerURL("comics", comicId)); //fx dentro de fx
+  console.log(comic);
+  //CARGAMOS LA URL PARA TRAER LA IMAGEN A LA TARJETA QUE DETALLA LA INFO coverPath
+  const imgComic = `${comic.thumbnail.path}.${comic.thumbnail.extension}`;
+  //releaseDate
+  const fecha = `12/01/1984`;
+  //writers
+  const autores = comic.creators.items
+
+    //hago un sting para traerme todos los escritores
+    .filter((creator) => creator.role === "writer") //filtro solo escritores
+    .map((creator) => creator.name) //creo un nuevo arreglo con escritores
+    .join(", "); //separamos los escritores con coma y espacio
+  actualizarDetallesDeComic(
+    imgComic,
+    comic.title,
+    fecha,
+    autores,
+    comic.description
+  ); //le paso estos argumento a los params de la fx de mas abajo
+};
+
+const imagenComic = traerElemento("#imagenComic");
+const titulo = traerElemento("#titulo");
+const fechaDePublicacion = traerElemento("#fechaDePublicacion");
+const guionistas = traerElemento("#guionistas");
+const detalles = traerElemento("#detalles");
+const seccionDetallesComic = traerElemento('#seccionDetallesComic')
+
+const actualizarDetallesDeComic = (
+  imgComic,
+  title,
+  fecha,
+  autores,
+  description
+) => {
+  //le voy a pasar todos los arg de mas arriba a estos params
+  imagenComic.src = imgComic;
+  titulo.innerHTML = title;
+  fechaDePublicacion.innerHTML = fecha;
+  guionistas.innerHTML = autores;
+  detalles.innerHTML = description;
+};
+
+
+//FILTROS 
+// const ordenarPor = document.getElementById("ordenar-por");
+
+// ordenarPor.addEventListener("change", () => {
+
+
+//A/Z
+
+// if (ordenarPor.value === "a-z") {
+//   operaciones.sort((a, b) => {
+//     if (a.descripcion.toLowerCase() < b.descripcion.toLowerCase()) {
+//       return -1;
+//     }
+//     if (a.descripcion.toLowerCase() > b.descripcion.toLowerCase()) return 1;
+//   });
+// }
+// pintarOperaciones(operaciones);
+
+// //Z/A
+
+// if (ordenarPor.value === "z-a") {
+//   operaciones.sort((a, b) => {
+//     if (a.descripcion.toLowerCase() > b.descripcion.toLowerCase()) {
+//       return -1;
+//     }
+//     if (a.descripcion.toLowerCase() < b.descripcion.toLowerCase()) return 1;
+//   });
+// }
+// pintarOperaciones(operaciones);
+//ORDENAR POR
+
+  //MAS RECIENTE
+  // if (ordenarPor.value === "mas-reciente") {
+  //   operaciones.sort((a, b) => new Date(b.fecha) - new Date(a.fecha));
+  // }
+  // pintarOperaciones(operaciones);
+
+  // //MENOS RECIENTE
+  // if (ordenarPor.value === "menos-reciente") {
+  //   operaciones.sort((a, b) => new Date(a.fecha) - new Date(b.fecha));
+  // }
+  // pintarOperaciones(operaciones);
+
+// });
+
+
+
+const search = () => {
+  if (tipo === "comics") {
+    fetchComics();
+  }
+};
+
+//LOADER//
+loader.classList.remove("esconder");
+setTimeout(() => {
+  loader.classList.add("esconder");
+  results.classList.remove("esconder");
+}, 2000);
+
+
+
+//2.37hs
 //INICIO//
 const inicio = () => {
   search();

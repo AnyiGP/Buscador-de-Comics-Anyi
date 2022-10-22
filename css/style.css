@@ -183,6 +183,10 @@ header {
   background-color: black;
 }
 
+.oculto {
+  display: none;
+}
+
 /* pagination */
 .pagination {
   display: flex;
