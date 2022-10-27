@@ -85,7 +85,7 @@
         <span class="span">Tipo</span>
         <select name="tipo" id="selectTipo" class="browser-default selectComic">
           <option value="comics">Comics</option>
-          <option value="personajes">Personajes</option>
+          <option value="characters">Personajes</option>
         </select>
       </div>
 
@@ -106,7 +106,7 @@
 
       <div class="col s12 m6 l2 margen">
         <a
-          class="valign-wrapper waves-effect waves-light btn-small #000000 black"
+          class="valign-wrapper waves-effect waves-light btn-small #000000 black" id="btn-buscar"
           >BUSCAR</a
         >
       </div>
@@ -128,8 +128,9 @@
       </div>
     </div>
 
-    <!--///////////////////////CONTENEDOR DETALLES/////////////////////-->
-    <div class="containerDetalles container" id="seccionDetallesComic">
+    <!--///////////////////////CONTENEDOR DETALLES DEL COMIC/////////////////////-->
+    <div id="seccionDetallesComic" class="esconder">
+    <div class="containerDetalles container">
       <div class="row">
         <div class="col s12">
           <img src="" alt="" id="imagenComic" />
@@ -147,19 +148,46 @@
         </div>
       </div>
     </div>
-      
 
+    <div>
+      <h4>Personajes</h4>
+      <div id="cantidadDeResultados">
+        <span id="numResultadoPersonajes"></span>
+        <span>RESULTADOS</span>
+      </div>
+      <div id="resultsPersonajes" class="row"></div>
+    </div>
+    </div>
+
+    <!--///////////////////////CONTENEDOR DETALLES DEL PERSONAJE/////////////////////-->
+    <div id="seccionDetallesPersonaje" class="esconder">
+      <div class="containerDetalles container">
+        <div class="row">
+          <div class="col s12">
+            <img src="" alt="" id="imagenPersonaje" />
+          </div>
+        </div>
+        <div class="row">
+          <div class="col s12">
+            <h4 id="nombre"></h4>
+            <h5>Descripción:</h5>
+          <p id="descripcion"></p>
+          </div>
+        </div>
+      </div>
+  
       <div>
-        <h4>Personajes</h4>
+        <h4>Comics en los que participó este personaje</h4>
         <div id="cantidadDeResultados">
           <span id="numResultadoPersonajes"></span>
           <span>RESULTADOS</span>
         </div>
         <div id="resultsPersonajes" class="row"></div>
       </div>
-    <!-- </div> -->
-
-    <!--///////////////////////////////////PAGINADOR//////////////////////////////////////-->
+      </div>
+  
+  
+      <!--///////////////////////////////////PAGINADOR//////////////////////////////////////-->
     <div class="container-paginador">
       <p>Pagina Actual: <span id="pagina-actual"></span></p>
       <span>Total de paginas: <span id="total-paginas"></span></span>

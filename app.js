@@ -8,6 +8,7 @@ const selectOrden = document.querySelector("#selectOrden");
 //FX PARA TRAER LOS ELEMENTOS, POR EJEMPLO EL SELECT TIPO//
 const traerElemento = (elemento) => document.querySelector(elemento);
 
+
 // //paginador
 // const paginaActual = document.querySelector("#pagina-actual");
 // const totalPaginas = document.querySelector("#total-paginas");
@@ -69,6 +70,7 @@ const obtenerParamDeBusqueda = (isSearch) => {
   if (!isSearch) {
     return buscarParam;
   }
+  
   return buscarParam;
 };
 
@@ -109,7 +111,7 @@ const fetchURL = async (url) => {
   return json; //me trae la data completa, como un objeto
 };
 
-const tipo = traerElemento("#selectTipo").value;
+// const tipo = traerElemento("#selectTipo").value;
 // console.log(tipo)
 
 //BUSCO COMIC
@@ -117,6 +119,7 @@ fetchComics = async () => {
   const {
     data: { results, total }, //traigo estos 2 params desde la data
   } = await fetchURL(obtenerURL("comics")); //fx dentro de fx
+  borrarResults()
   printComics(results);
 
   // console.log(total)
@@ -147,6 +150,7 @@ const printComics = (comics) => {
     comicCard.onclick = () => {
       console.log(comic, comic.id);
       fetchComicsId(comic.id); //ejecuto esta función para que me de el id de cada comic, la función está mas abajo, le paso el agumento comic y comic id
+  
     };
     comicCard.innerHTML = `
     
@@ -158,9 +162,6 @@ const printComics = (comics) => {
         <div class="card-content">
           <p>Nombre: ${comic.title}</p>
         </div>
-        <div class="card-action">
-          <a href="#">ver mas...</a>
-        </div>
       </div>
     </div>
 
@@ -169,15 +170,16 @@ const printComics = (comics) => {
   }
 };
 
+
 //INGRESAR AL COMIC SELECCIONADO Y TRAER INFORMACIÓN//
 fetchComicsId = async (comicId) => {
-  console.log(comicId);
+  // console.log(comicId);
   const {
     data: {
       results: [comic],
     }, //traigo estos 2 params desde la data
   } = await fetchURL(obtenerURL("comics", comicId)); //fx dentro de fx
-  console.log(comic);
+  // console.log(comic);
   //CARGAMOS LA URL PARA TRAER LA IMAGEN A LA TARJETA QUE DETALLA LA INFO coverPath
   const imgComic = `${comic.thumbnail.path}/portrait_uncanny.${comic.thumbnail.extension}`;
   //releaseDate
@@ -196,7 +198,10 @@ fetchComicsId = async (comicId) => {
     autores,
     comic.description
   ); //le paso estos argumento a los params de la fx de mas abajo
+  mostrarSeccionDetallesComic()
 };
+
+//lo de abajo ver si lo puedo hacer con el dom
 
 const imagenComic = traerElemento("#imagenComic");
 const titulo = traerElemento("#titulo");
@@ -204,6 +209,7 @@ const fechaDePublicacion = traerElemento("#fechaDePublicacion");
 const guionistas = traerElemento("#guionistas");
 const detalles = traerElemento("#detalles");
 const seccionDetallesComic = traerElemento("#seccionDetallesComic");
+const contenedorResultados = traerElemento('#contenedorResultados')
 
 const actualizarDetallesDeComic = (
   imgComic,
@@ -220,7 +226,143 @@ const actualizarDetallesDeComic = (
   detalles.innerHTML = description;
 };
 
+const mostrarSeccionDetallesComic = () => {
+  seccionDetallesComic.classList.remove('esconder')
+  contenedorResultados.classList.add('esconder')
+  return mostrarSeccionDetallesComic
+}
+
+// console.log(mostrarSeccionDetallesComic)
+
+///BOTON BUSCAR///
+const btnBuscar = traerElemento('#btn-buscar')
+
+
+/////////////////////////////////////////////////////
+//////////////////PERSONAJES//////////////////////
+////////////////////////////////////////////////////////
+//borro resultados anteriores
+const borrarResults = () => results.innerHTML = ''
+
+
+//BUSCO PERSONAJES
+fetchPersonajes = async () => {
+  
+  const {
+    data: { results, total }, //traigo estos 2 params desde la data
+  } = await fetchURL(obtenerURL("characters")); //fx dentro de fx
+  console.log(results, total)
+  borrarResults()
+  printPersonajes(results);
+
+  // console.log(total)
+  //updateResultsCount
+  actualizarResultados(total);
+};
+
+
+// //IMPRIMIR PERSONAJES
+//fetchPersonajes(characters, characters.id)
+const resultadoPersonajes = traerElemento("#results");
+console.log(cantidadDeResultados);
+
+const printPersonajes = (characters) => {
+  if (characters.length === 0) {
+    results.innerHTML =
+      '<h2 class="sin-resultado">No se encontraron resultados para el pedido</h2>';
+  }
+
+  //'FOR OF' ENTRE UN FOR Y UN FOR EACH, SE USA PARA ARREGLOS
+  //variable iteratora personaje/iterator
+  for (const character of characters) {
+    console.log(character); //va a traer el objeto por cada personaje
+    const personajeCard = document.createElement("div");
+
+    personajeCard.tabIndex = 0;
+    personajeCard.classList.add("comic");
+    //le doy un evento
+    personajeCard.onclick = () => {
+      console.log(character.id);
+      fetchPersonajeId(character.id); //ejecuto esta función para que me de el id de cada comic, la función está mas abajo, le paso el agumento comic y comic id
+  
+    };
+    personajeCard.innerHTML = `
+    
+    <div class="col s12 m3">
+      <div class="card">
+        <div class="card-image">
+          <img src="${character.thumbnail.path}/portrait_uncanny.${character.thumbnail.extension}" alt="${character.name}" class="comic-thumbnail">
+        </div>
+        <div class="card-content">
+          <p>Nombre: ${character.name}</p>
+        </div>
+      </div>
+    </div>
+
+    `;
+    results.append(personajeCard);
+  }
+};
+
+
+fetchPersonaje = async (charactersId) => {
+  console.log(charactersId)
+  const {
+    data: {
+      results: [character],
+    },
+  } = await fetchURL (obtenerURL('characters', charactersId))
+  
+}
+
+//INGRESAR AL Personaje SELECCIONADO Y TRAER nombre y comics en los que han salido//
+fetchPersonajeId = async (characterId) => {
+  const {
+    data: {
+      results: [character],
+    }, //traigo estos 2 params desde la data
+  } = await fetchURL(obtenerURL("characters", characterId)); //fx dentro de fx
+  //CARGAMOS LA URL PARA TRAER LA IMAGEN A LA TARJETA QUE DETALLA LA INFO coverPath
+  const imgPersonaje = `${character.thumbnail.path}/portrait_uncanny.${character.thumbnail.extension}`;
+  actualizarDetallesDePersonaje(
+    imgPersonaje,
+    character.name,
+    character.description
+  ); //le paso estos argumento a los params de la fx de mas abajo
+  mostrarSeccionDetallesPersonaje()
+};
+
+//lo de abajo ver si lo puedo hacer con el dom
+const seccionDetallesPersonaje = traerElemento('#seccionDetallesPersonaje')
+const imagenPersonaje = traerElemento("#imagenPersonaje");
+const nombre = traerElemento("#nombre");
+const descripcion = traerElemento('#descripcion')
+
+const actualizarDetallesDePersonaje = (
+  imgPersonaje,
+  name,
+  description
+) => {
+  //le voy a pasar todos los arg de mas arriba a estos params
+  imagenPersonaje.src = imgPersonaje;
+  nombre.innerHTML = name;
+  descripcion.innerHTML = description
+};
+
+const mostrarSeccionDetallesPersonaje = () => {
+  seccionDetallesPersonaje.classList.remove('esconder')
+  contenedorResultados.classList.add('esconder')
+  return mostrarSeccionDetallesComic
+}
+
+// console.log(mostrarSeccionDetallesComic)
+
+
+
+
 //FILTROS
+//hacer una copia del arr de los comics y ordenarlos con el sort o usar el orderBy como parámetro que ya trae la api de marvel
+
 // const ordenarPor = document.getElementById("ordenar-por");
 
 // ordenarPor.addEventListener("change", () => {
@@ -265,9 +407,13 @@ const actualizarDetallesDeComic = (
 // });
 
 const search = () => {
-  if (tipo === "comics") {
+  if (selectTipo.value === "comics") {
     fetchComics();
   }
+  if (selectTipo.value === "characters") {
+    fetchPersonajes();
+  }
+  
 };
 
 //LOADER//
@@ -280,6 +426,9 @@ setTimeout(() => {
 //2.37hs
 //INICIO//
 const inicio = () => {
+  btnBuscar.addEventListener('click', () => {
+    search()
+  })
   search();
 };
 
@@ -310,6 +459,10 @@ if (element) {
     false
   );
 }
+
+
+//cuando el usuario le de click al btn avanzar solo una pagina, le paso como offset 19 y vuelvo a ejecutar la función de getSearchParams u obtener parametros de búsqueda
+//para el btn que me lleve a la ultima página, debemos hacer que me divida la cantidad de resultados por 20 para que me de la cantidad de las páginas
 
 // //   //NUEVA FUNCION PARA HACER LO DEL PAGINADOR
 
