@@ -330,7 +330,7 @@ fetchPersonajeId = async (characterId) => {
     character.description
   ); //le paso estos argumento a los params de la fx de mas abajo
   mostrarSeccionDetallesPersonaje()
-  traerComicsDePersonajeId(characterId)
+  traerComicsDelPersonajeId(characterId)
 };
 
 //lo de abajo ver si lo puedo hacer con el dom
@@ -350,9 +350,7 @@ const actualizarDetallesDePersonaje = (
   descripcion.innerHTML = description
 };
 
-const comicsDelPersonaje = traerElemento('#comicsDelPersonaje')
-
-const traerComicsDePersonajeId = async (characterId) => {
+const traerComicsDelPersonajeId = async (characterId) => {
   // console.log('aca van los comics en los que participo') //url + /v1/public/characters/{characterId}/comics
   const {
     data: {
@@ -361,10 +359,51 @@ const traerComicsDePersonajeId = async (characterId) => {
   } = await fetchURL(obtenerURL("characters", characterId, 'comics')); //fx dentro de fx
   // const comicDelPersonaje = `${character.comics}`
   console.log(results, total)
-  
-  
-
+  printComicsDelPersonaje(results)
+  actualizarResultados(total)
 }
+
+const comicsDelPersonaje = traerElemento('#comicsDelPersonaje')
+
+const printComicsDelPersonaje = (comics) => {
+  if (comics.length === 0) {
+    comicsDelPersonaje.innerHTML =
+      '<h2 class="sin-resultado">No se encontraron resultados para el pedido</h2>';
+  }
+
+  //FOR OF ENTRE UN FOR Y UN FOR EACH, SE USA PARA ARREGLOS
+  //variable iteratora comics/iterator
+  for (const comic of comics) {
+    console.log(comic); //va a traer el objeto por cada personaje
+    const comicCard = document.createElement("div");
+
+    comicCard.tabIndex = 0;
+    comicCard.classList.add("comic");
+    //le doy un evento
+    comicCard.onclick = () => {
+      console.log(comic, comic.id);
+      fetchComicsId(comic.id); //ejecuto esta función para que me de el id de cada comic, la función está mas abajo, le paso el agumento comic y comic id
+  
+    };
+    comicCard.innerHTML = `
+    
+    <div class="col s12 m3">
+      <div class="card">
+        <div class="card-image">
+          <img src="${comic.thumbnail.path}/portrait_uncanny.${comic.thumbnail.extension}" alt="${comic.title}" class="comic-thumbnail">
+        </div>
+        <div class="card-content">
+          <p>Nombre: ${comic.title}</p>
+        </div>
+      </div>
+    </div>
+
+    `;
+    comicsDelPersonaje.append(comicCard);
+  }
+};
+
+
 
 const mostrarSeccionDetallesPersonaje = () => {
   seccionDetallesPersonaje.classList.remove('esconder')
