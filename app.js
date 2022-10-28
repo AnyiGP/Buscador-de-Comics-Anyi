@@ -330,6 +330,7 @@ fetchPersonajeId = async (characterId) => {
     character.description
   ); //le paso estos argumento a los params de la fx de mas abajo
   mostrarSeccionDetallesPersonaje()
+  traerComicsDePersonajeId(characterId)
 };
 
 //lo de abajo ver si lo puedo hacer con el dom
@@ -348,6 +349,22 @@ const actualizarDetallesDePersonaje = (
   nombre.innerHTML = name;
   descripcion.innerHTML = description
 };
+
+const comicsDelPersonaje = traerElemento('#comicsDelPersonaje')
+
+const traerComicsDePersonajeId = async (characterId) => {
+  // console.log('aca van los comics en los que participo') //url + /v1/public/characters/{characterId}/comics
+  const {
+    data: {
+      results, total
+    }, //traigo estos 2 params desde la data
+  } = await fetchURL(obtenerURL("characters", characterId, 'comics')); //fx dentro de fx
+  // const comicDelPersonaje = `${character.comics}`
+  console.log(results, total)
+  
+  
+
+}
 
 const mostrarSeccionDetallesPersonaje = () => {
   seccionDetallesPersonaje.classList.remove('esconder')
