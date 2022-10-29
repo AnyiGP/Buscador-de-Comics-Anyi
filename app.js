@@ -199,6 +199,7 @@ fetchComicsId = async (comicId) => {
     comic.description
   ); //le paso estos argumento a los params de la fx de mas abajo
   mostrarSeccionDetallesComic()
+  // traerPersonajeDelComicId(characterId)
 };
 
 //lo de abajo ver si lo puedo hacer con el dom
@@ -226,11 +227,76 @@ const actualizarDetallesDeComic = (
   detalles.innerHTML = description;
 };
 
+
+// ///////////////////////////////////////////
+// /////////////////////mostrar personajes que participan de ese comic//////////////////////
+// const traerPersonajeDelComicId = async (comicId) => {
+//   // console.log('aca van los comics en los que participo') //url + /v1/GET /v1/public/comics/{comicId}/characters
+//   const {
+//     data: {
+//       results, total
+//     }, //traigo estos 2 params desde la data
+//   } = await fetchURL(obtenerURL("comics", comicId, 'characters')); //fx dentro de fx
+//   // const comicDelPersonaje = `${character.comics}`
+//   console.log(results, total)
+//   printPersonajeDelComic(results)
+//   actualizarResultados(total)
+// }
+
+// const personajeDelComic = traerElemento('#personajeDelComic')
+
+// const printPersonajeDelComic = (characters) => {
+//   if (characters.length === 0) {
+//     personajeDelComic.innerHTML =
+//       '<h2 class="sin-resultado">No se encontraron resultados para el pedido</h2>';
+//   }
+
+//   //FOR OF ENTRE UN FOR Y UN FOR EACH, SE USA PARA ARREGLOS
+//   //variable iteratora characters/iterator
+//   for (const character of characters) {
+//     console.log(character); //va a traer el objeto por cada comic
+//     const personajeCard = document.createElement("div");
+
+//     personajeCard.tabIndex = 0;
+//     personajeCard.classList.add("comic");
+//     //le doy un evento
+//     personajeCard.onclick = () => {
+//       console.log(character, character.id);
+//       fetchcharacterId(character.id); //ejecuto esta función para que me de el id de cada comic, la función está mas abajo, le paso el agumento comic y comic id
+  
+//     };
+//     personajeCard.innerHTML = `
+    
+//     <div class="col s12 m3">
+//       <div class="card">
+//         <div class="card-image">
+//           <img src="${character.thumbnail.path}/portrait_uncanny.${character.thumbnail.extension}" alt="${character.name}" class="character-thumbnail">
+//         </div>
+//         <div class="card-content">
+//           <p>Nombre: ${character.name}</p>
+//         </div>
+//       </div>
+//     </div>
+
+//     `;
+//     personajeDelComic.append(personajeCard);
+//   }
+// };
+
+// ///////////////////////////////////////////
+
+
 const mostrarSeccionDetallesComic = () => {
   seccionDetallesComic.classList.remove('esconder')
   contenedorResultados.classList.add('esconder')
   return mostrarSeccionDetallesComic
 }
+
+
+
+
+
+
 
 // console.log(mostrarSeccionDetallesComic)
 
@@ -350,6 +416,8 @@ const actualizarDetallesDePersonaje = (
   descripcion.innerHTML = description
 };
 
+//////////////////
+
 const traerComicsDelPersonajeId = async (characterId) => {
   // console.log('aca van los comics en los que participo') //url + /v1/public/characters/{characterId}/comics
   const {
@@ -403,6 +471,14 @@ const printComicsDelPersonaje = (comics) => {
   }
 };
 
+//AGREGAR UNA FX QUE AL SELECCIONAR EL COMIC DEL PERSONAJE ME LLEVE A ESE COMIC Y ME MUESTRE LOS PEROSNAJES DE ESE COMIC
+
+//AGREGAR UNA FX QUE AL SELECCIONAR EL PERSONAJE DEL COMIC ME LLEVE A ESE PERSONAJE Y ME MUESTRE LOS COMICS DE ESE PERSONAJE
+
+//AGREGAR UNA FUNCIÓN QUE QUE AL SELECCIONAR NUEVAMENTE EN EL SELEC COMIC ME VUELVA A MOSTRAR LA SECCIÓN DE COMIC
+
+
+
 
 
 const mostrarSeccionDetallesPersonaje = () => {
@@ -413,6 +489,8 @@ const mostrarSeccionDetallesPersonaje = () => {
 
 // console.log(mostrarSeccionDetallesComic)
 
+//INPUT//
+//Al agregar un nombre de comic que busque ese comic, si selecciona personajes y agrega nobre de ese personaje que busque ese personaje
 
 
 
