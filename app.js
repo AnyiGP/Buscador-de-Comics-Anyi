@@ -26,41 +26,6 @@ const apiPrivate = "cad2a3938979fe8b84a5c8ba91a7d37810873c88";
 const baseURL = "https://gateway.marvel.com/v1/public/"; // base de la api a la que le voy a ir agregando end point para pedirle lo que valla necesitando////////
 let offset = 0; //que empiece en 0
 
-////////////////////////////////////////////////////////
-// const obtenerParamDeBusqueda = (paramDeBusqueda) => {
-//   let url = baseURL;
-//   let buscarParam = `?apikey=${apiPublic}&offset=${offset}`;
-
-//   //BUSCO EL SELECT DE COMIC O PERSONAJE
-//   // const tipo = traerElemento('#selectTipo').value
-//   // console.log(tipo)
-
-//   if (selectTipo.value === "comics") {
-//     url += selectTipo.value + buscarParam; //traigo data de tipo comic o personaje
-//   }
-//   fetch(url)
-//     .then((resp) => resp.json())
-//     .then((json) => console.log(json))
-//     .catch((err) => console.error(err));
-// };
-
-// obtenerParamDeBusqueda();
-
-// const getData = async () => {
-//   loader.classList.remove("esconder");
-//   setTimeout(() => {
-//     loader.classList.add("esconder");
-//     root.classList.remove("esconder");
-//   }, 2000);
-
-//   const url = `http://gateway.marvel.com/v1/public/comics?apikey=${apiPublic}`;
-//   fetch(url)
-//     .then((resp) => resp.json())
-//     .then((json) => console.log(json))
-//     .catch((err) => console.error(err));
-// };
-// getData();
-
 ///////////////////ES LO MISMO DE ARRIBA PERO DE OTRA MANERA///////////////////////
 
 const obtenerParamDeBusqueda = (isSearch) => {
@@ -95,6 +60,8 @@ const obtenerURL = (resourse, resourseID, subResourse) => {
   url += obtenerParamDeBusqueda(isSearch);
   return url;
 };
+
+
 
 //PINTAR NUMERO DE RESULTADOS//
 const numResultado = traerElemento("#numResultado");
@@ -160,7 +127,7 @@ const printComics = (comics) => {
           <img src="${comic.thumbnail.path}/portrait_uncanny.${comic.thumbnail.extension}" alt="${comic.title}" class="comic-thumbnail">
         </div>
         <div class="card-content">
-          <p>Nombre: ${comic.title}</p>
+          <p>${comic.title}</p>
         </div>
       </div>
     </div>
@@ -285,6 +252,11 @@ const actualizarDetallesDeComic = (
 
 // ///////////////////////////////////////////
 
+//DIV DE MUESTRA LOS PERSONAJES ID resultsPersonajes 
+
+
+//si estoy en personajes, para salir seleccionar comic, btn buscar, me llev a seccion de comic
+
 
 const mostrarSeccionDetallesComic = () => {
   seccionDetallesComic.classList.remove('esconder')
@@ -360,7 +332,7 @@ const printPersonajes = (characters) => {
           <img src="${character.thumbnail.path}/portrait_uncanny.${character.thumbnail.extension}" alt="${character.name}" class="comic-thumbnail">
         </div>
         <div class="card-content">
-          <p>Nombre: ${character.name}</p>
+          <p>${character.name}</p>
         </div>
       </div>
     </div>
@@ -461,7 +433,7 @@ const printComicsDelPersonaje = (comics) => {
           <img src="${comic.thumbnail.path}/portrait_uncanny.${comic.thumbnail.extension}" alt="${comic.title}" class="comic-thumbnail">
         </div>
         <div class="card-content">
-          <p>Nombre: ${comic.title}</p>
+          <p>${comic.title}</p>
         </div>
       </div>
     </div>
