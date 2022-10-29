@@ -71,7 +71,7 @@
         <div class="row">
           <h5 class="margenIzq">Ingresa Tu Búsqueda</h5>
           <div class="input-field col s12 m10">
-            <i class="material-icons prefix">search</i>
+            <i class="material-icons prefix search">search</i>
             <input type="text" id="autocomplete-input" class="autocomplete" />
             <label for="autocomplete-input">Ingresa tu búsqueda</label>
           </div>
@@ -94,11 +94,11 @@
       <div class="col s12 m6 l2 valign-wrapper margen">
         <label for=""></label>
         <span class="span">Orden</span>
-        <select class="browser-default selectComic">
-          <option id="quieroAZ" value="">A-Z</option>
-          <option id="quieroZA" value="">Z-A</option>
-          <option id="quieroMasViejo" value="">Mas Viejo</option>
-          <option id="quieroMasNuevo" value="">Mas Nuevo</option>
+        <select class="browser-default selectComic" id="selectOrden">
+          <option id="quieroAZ" value="name">A-Z</option>
+          <option id="quieroZA" value="-name">Z-A</option>
+          <option id="quieroMasViejo" value="-modified">Mas Viejo</option>
+          <option id="quieroMasNuevo" value="modified">Mas Nuevo</option>
         </select>
       </div>
 

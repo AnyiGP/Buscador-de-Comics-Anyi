@@ -8,7 +8,6 @@ const selectOrden = document.querySelector("#selectOrden");
 //FX PARA TRAER LOS ELEMENTOS, POR EJEMPLO EL SELECT TIPO//
 const traerElemento = (elemento) => document.querySelector(elemento);
 
-
 // //paginador
 // const paginaActual = document.querySelector("#pagina-actual");
 // const totalPaginas = document.querySelector("#total-paginas");
@@ -26,7 +25,7 @@ const apiPrivate = "cad2a3938979fe8b84a5c8ba91a7d37810873c88";
 const baseURL = "https://gateway.marvel.com/v1/public/"; // base de la api a la que le voy a ir agregando end point para pedirle lo que valla necesitando////////
 let offset = 0; //que empiece en 0
 
-///////////////////ES LO MISMO DE ARRIBA PERO DE OTRA MANERA///////////////////////
+///////////////////ES LO MISMO DE ARRIBA PERO DE OTRA MANERA//OBTENER PARÁMETROS DE BUSQUEDA/////////////////////
 
 const obtenerParamDeBusqueda = (isSearch) => {
   //seacrhParams
@@ -35,7 +34,50 @@ const obtenerParamDeBusqueda = (isSearch) => {
   if (!isSearch) {
     return buscarParam;
   }
-  
+
+  if (!autocompleteInput.value.length) {
+    return buscarParam;
+  }
+
+  ////seleccion comic, agregar titulo comic, buscar comic.//
+  if (selectTipo.value === "comics") {
+    buscarParam += `&titleStartsWith=${autocompleteInput.value}`; //saco de la cocumentación
+  }
+
+  //Selecciona personajes, agrega nombre personaje, busca personaje//
+
+  if (selectTipo.value === "characters") {
+    buscarParam += `&nameStartsWith=${autocompleteInput.value}`; //saco de la cocumentación
+  }
+
+  //////////////////////////////////////////////////////////////////////////
+
+  // if (!selectOrden.value.length) {
+  //   return buscarParam;
+  // }
+
+  //hacer otro if con el value del selec de ordenar por A-Z//
+  if (selectOrden.value === "name") {
+    buscarParam += `?orderBy=${selectOrden.value}`; //saco de la cocumentación
+  }
+
+  // //hacer otro if con el value del selec de ordenar por Z-A//
+  // if (selectOrden.value === "-name") {
+  //   buscarParam += `&orderBy=${selectOrden.value}`; //saco de la cocumentación
+  // }
+
+  // //hacer otro if con el value del selec de ordenar por Mas Viejo//
+  // if (selectOrden.value === "-modified") {
+  //   buscarParam += `&orderBy=${selectOrden.value}`; //saco de la cocumentación
+  // }
+
+  // //hacer otro if con el value del selec de ordenar por Mas Viejo//
+  // if (selectOrden.value === "modified") {
+  //   buscarParam += `&orderBy=${selectOrden.value}`; //saco de la cocumentación
+  // }
+
+  //esto de acá arriba me da un conflicto con la url me tira error 409
+
   return buscarParam;
 };
 
@@ -61,8 +103,6 @@ const obtenerURL = (resourse, resourseID, subResourse) => {
   return url;
 };
 
-
-
 //PINTAR NUMERO DE RESULTADOS//
 const numResultado = traerElemento("#numResultado");
 let resultCount = 0;
@@ -81,12 +121,20 @@ const fetchURL = async (url) => {
 // const tipo = traerElemento("#selectTipo").value;
 // console.log(tipo)
 
+////////////////////////////////////////////////////////////
+//INPUT//////////////////////////////////////////////////////
+
+const autocompleteInput = traerElemento("#autocomplete-input");
+
+/////////////////////////////////////////////////////////////
 //BUSCO COMIC
+/////////////////////////////////////////////////////////////
+
 fetchComics = async () => {
   const {
     data: { results, total }, //traigo estos 2 params desde la data
   } = await fetchURL(obtenerURL("comics")); //fx dentro de fx
-  borrarResults()
+  borrarResults();
   printComics(results);
 
   // console.log(total)
@@ -117,7 +165,6 @@ const printComics = (comics) => {
     comicCard.onclick = () => {
       console.log(comic, comic.id);
       fetchComicsId(comic.id); //ejecuto esta función para que me de el id de cada comic, la función está mas abajo, le paso el agumento comic y comic id
-  
     };
     comicCard.innerHTML = `
     
@@ -136,7 +183,6 @@ const printComics = (comics) => {
     results.append(comicCard);
   }
 };
-
 
 //INGRESAR AL COMIC SELECCIONADO Y TRAER INFORMACIÓN//
 fetchComicsId = async (comicId) => {
@@ -165,7 +211,7 @@ fetchComicsId = async (comicId) => {
     autores,
     comic.description
   ); //le paso estos argumento a los params de la fx de mas abajo
-  mostrarSeccionDetallesComic()
+  mostrarSeccionDetallesComic();
   // traerPersonajeDelComicId(characterId)
 };
 
@@ -177,7 +223,7 @@ const fechaDePublicacion = traerElemento("#fechaDePublicacion");
 const guionistas = traerElemento("#guionistas");
 const detalles = traerElemento("#detalles");
 const seccionDetallesComic = traerElemento("#seccionDetallesComic");
-const contenedorResultados = traerElemento('#contenedorResultados')
+const contenedorResultados = traerElemento("#contenedorResultados");
 
 const actualizarDetallesDeComic = (
   imgComic,
@@ -194,9 +240,9 @@ const actualizarDetallesDeComic = (
   detalles.innerHTML = description;
 };
 
-
 // ///////////////////////////////////////////
 // /////////////////////mostrar personajes que participan de ese comic//////////////////////
+
 // const traerPersonajeDelComicId = async (comicId) => {
 //   // console.log('aca van los comics en los que participo') //url + /v1/GET /v1/public/comics/{comicId}/characters
 //   const {
@@ -230,10 +276,10 @@ const actualizarDetallesDeComic = (
 //     personajeCard.onclick = () => {
 //       console.log(character, character.id);
 //       fetchcharacterId(character.id); //ejecuto esta función para que me de el id de cada comic, la función está mas abajo, le paso el agumento comic y comic id
-  
+
 //     };
 //     personajeCard.innerHTML = `
-    
+
 //     <div class="col s12 m3">
 //       <div class="card">
 //         <div class="card-image">
@@ -252,52 +298,40 @@ const actualizarDetallesDeComic = (
 
 // ///////////////////////////////////////////
 
-//DIV DE MUESTRA LOS PERSONAJES ID resultsPersonajes 
-
+//DIV DE MUESTRA LOS PERSONAJES ID resultsPersonajes
 
 //si estoy en personajes, para salir seleccionar comic, btn buscar, me llev a seccion de comic
 
-
 const mostrarSeccionDetallesComic = () => {
-  seccionDetallesComic.classList.remove('esconder')
-  contenedorResultados.classList.add('esconder')
-  return mostrarSeccionDetallesComic
-}
-
-
-
-
-
-
+  seccionDetallesComic.classList.remove("esconder");
+  contenedorResultados.classList.add("esconder");
+  return mostrarSeccionDetallesComic;
+};
 
 // console.log(mostrarSeccionDetallesComic)
 
 ///BOTON BUSCAR///
-const btnBuscar = traerElemento('#btn-buscar')
-
+const btnBuscar = traerElemento("#btn-buscar");
 
 /////////////////////////////////////////////////////
 //////////////////PERSONAJES//////////////////////
 ////////////////////////////////////////////////////////
 //borro resultados anteriores
-const borrarResults = () => results.innerHTML = ''
-
+const borrarResults = () => (results.innerHTML = "");
 
 //BUSCO PERSONAJES
 fetchPersonajes = async () => {
-  
   const {
     data: { results, total }, //traigo estos 2 params desde la data
   } = await fetchURL(obtenerURL("characters")); //fx dentro de fx
-  console.log(results, total)
-  borrarResults()
+  console.log(results, total);
+  borrarResults();
   printPersonajes(results);
 
   // console.log(total)
   //updateResultsCount
   actualizarResultados(total);
 };
-
 
 // //IMPRIMIR PERSONAJES
 //fetchPersonajes(characters, characters.id)
@@ -322,7 +356,6 @@ const printPersonajes = (characters) => {
     personajeCard.onclick = () => {
       console.log(character.id);
       fetchPersonajeId(character.id); //ejecuto esta función para que me de el id de cada comic, la función está mas abajo, le paso el agumento comic y comic id
-  
     };
     personajeCard.innerHTML = `
     
@@ -342,16 +375,14 @@ const printPersonajes = (characters) => {
   }
 };
 
-
 fetchPersonaje = async (charactersId) => {
-  console.log(charactersId)
+  console.log(charactersId);
   const {
     data: {
       results: [character],
     },
-  } = await fetchURL (obtenerURL('characters', charactersId))
-  
-}
+  } = await fetchURL(obtenerURL("characters", charactersId));
+};
 
 //INGRESAR AL Personaje SELECCIONADO Y TRAER nombre y comics en los que han salido//
 fetchPersonajeId = async (characterId) => {
@@ -367,25 +398,21 @@ fetchPersonajeId = async (characterId) => {
     character.name,
     character.description
   ); //le paso estos argumento a los params de la fx de mas abajo
-  mostrarSeccionDetallesPersonaje()
-  traerComicsDelPersonajeId(characterId)
+  mostrarSeccionDetallesPersonaje();
+  traerComicsDelPersonajeId(characterId);
 };
 
 //lo de abajo ver si lo puedo hacer con el dom
-const seccionDetallesPersonaje = traerElemento('#seccionDetallesPersonaje')
+const seccionDetallesPersonaje = traerElemento("#seccionDetallesPersonaje");
 const imagenPersonaje = traerElemento("#imagenPersonaje");
 const nombre = traerElemento("#nombre");
-const descripcion = traerElemento('#descripcion')
+const descripcion = traerElemento("#descripcion");
 
-const actualizarDetallesDePersonaje = (
-  imgPersonaje,
-  name,
-  description
-) => {
+const actualizarDetallesDePersonaje = (imgPersonaje, name, description) => {
   //le voy a pasar todos los arg de mas arriba a estos params
   imagenPersonaje.src = imgPersonaje;
   nombre.innerHTML = name;
-  descripcion.innerHTML = description
+  descripcion.innerHTML = description;
 };
 
 //////////////////
@@ -393,17 +420,15 @@ const actualizarDetallesDePersonaje = (
 const traerComicsDelPersonajeId = async (characterId) => {
   // console.log('aca van los comics en los que participo') //url + /v1/public/characters/{characterId}/comics
   const {
-    data: {
-      results, total
-    }, //traigo estos 2 params desde la data
-  } = await fetchURL(obtenerURL("characters", characterId, 'comics')); //fx dentro de fx
+    data: { results, total }, //traigo estos 2 params desde la data
+  } = await fetchURL(obtenerURL("characters", characterId, "comics")); //fx dentro de fx
   // const comicDelPersonaje = `${character.comics}`
-  console.log(results, total)
-  printComicsDelPersonaje(results)
-  actualizarResultados(total)
-}
+  console.log(results, total);
+  printComicsDelPersonaje(results);
+  actualizarResultados(total);
+};
 
-const comicsDelPersonaje = traerElemento('#comicsDelPersonaje')
+const comicsDelPersonaje = traerElemento("#comicsDelPersonaje");
 
 const printComicsDelPersonaje = (comics) => {
   if (comics.length === 0) {
@@ -423,7 +448,6 @@ const printComicsDelPersonaje = (comics) => {
     comicCard.onclick = () => {
       console.log(comic, comic.id);
       fetchComicsId(comic.id); //ejecuto esta función para que me de el id de cada comic, la función está mas abajo, le paso el agumento comic y comic id
-  
     };
     comicCard.innerHTML = `
     
@@ -449,22 +473,13 @@ const printComicsDelPersonaje = (comics) => {
 
 //AGREGAR UNA FUNCIÓN QUE QUE AL SELECCIONAR NUEVAMENTE EN EL SELEC COMIC ME VUELVA A MOSTRAR LA SECCIÓN DE COMIC
 
-
-
-
-
 const mostrarSeccionDetallesPersonaje = () => {
-  seccionDetallesPersonaje.classList.remove('esconder')
-  contenedorResultados.classList.add('esconder')
-  return mostrarSeccionDetallesComic
-}
+  seccionDetallesPersonaje.classList.remove("esconder");
+  contenedorResultados.classList.add("esconder");
+  return mostrarSeccionDetallesComic;
+};
 
 // console.log(mostrarSeccionDetallesComic)
-
-//INPUT//
-//Al agregar un nombre de comic que busque ese comic, si selecciona personajes y agrega nobre de ese personaje que busque ese personaje
-
-
 
 //FILTROS
 //hacer una copia del arr de los comics y ordenarlos con el sort o usar el orderBy como parámetro que ya trae la api de marvel
@@ -519,7 +534,6 @@ const search = () => {
   if (selectTipo.value === "characters") {
     fetchPersonajes();
   }
-  
 };
 
 //LOADER//
@@ -532,9 +546,9 @@ setTimeout(() => {
 //2.37hs
 //INICIO//
 const inicio = () => {
-  btnBuscar.addEventListener('click', () => {
-    search()
-  })
+  btnBuscar.addEventListener("click", () => {
+    search();
+  });
   search();
 };
 
@@ -565,7 +579,6 @@ if (element) {
     false
   );
 }
-
 
 //cuando el usuario le de click al btn avanzar solo una pagina, le paso como offset 19 y vuelvo a ejecutar la función de getSearchParams u obtener parametros de búsqueda
 //para el btn que me lleve a la ultima página, debemos hacer que me divida la cantidad de resultados por 20 para que me de la cantidad de las páginas
