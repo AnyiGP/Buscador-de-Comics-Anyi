@@ -56,10 +56,10 @@ const obtenerParamDeBusqueda = (isSearch) => {
   //   return buscarParam;
   // }
 
-  //hacer otro if con el value del selec de ordenar por A-Z//
-  if (selectOrden.value === "name") {
-    buscarParam += `?orderBy=${selectOrden.value}`; //saco de la cocumentación
-  }
+  // //hacer otro if con el value del selec de ordenar por A-Z//
+  // if (selectOrden.value === "name") {
+  //   buscarParam += `&orderBy=${selectOrden.value}`; //saco de la cocumentación
+  // }
 
   // //hacer otro if con el value del selec de ordenar por Z-A//
   // if (selectOrden.value === "-name") {
@@ -142,10 +142,10 @@ fetchComics = async () => {
   actualizarResultados(total);
 };
 
-//PINTAR COMICS//
+//IMPRIMIR COMICS//
 //buscamos donde lo vamos a pintar los resultados y el total
 const results = traerElemento("#results");
-console.log(cantidadDeResultados);
+// console.log(cantidadDeResultados);
 
 const printComics = (comics) => {
   if (comics.length === 0) {
@@ -156,7 +156,7 @@ const printComics = (comics) => {
   //FOR OF ENTRE UN FOR Y UN FOR EACH, SE USA PARA ARREGLOS
   //variable iteratora comics/iterator
   for (const comic of comics) {
-    console.log(comic); //va a traer el objeto por cada personaje
+    // console.log(comic); //va a traer el objeto por cada personaje
     const comicCard = document.createElement("div");
 
     comicCard.tabIndex = 0;
@@ -184,6 +184,17 @@ const printComics = (comics) => {
   }
 };
 
+/////////////////////////////////////NUEVA FX QUE E STA EN PERSONAJES PERO NO ESTABA EN COMICS//
+fetchComic = async (comicId) => {
+  // console.log(comicId);
+  const {
+    data: {
+      results: [comic],
+    },
+  } = await fetchURL(obtenerURL("comics", comicId));
+};
+/////////////////////////////////
+
 //INGRESAR AL COMIC SELECCIONADO Y TRAER INFORMACIÓN//
 fetchComicsId = async (comicId) => {
   // console.log(comicId);
@@ -193,6 +204,7 @@ fetchComicsId = async (comicId) => {
     }, //traigo estos 2 params desde la data
   } = await fetchURL(obtenerURL("comics", comicId)); //fx dentro de fx
   // console.log(comic);
+  
   //CARGAMOS LA URL PARA TRAER LA IMAGEN A LA TARJETA QUE DETALLA LA INFO coverPath
   const imgComic = `${comic.thumbnail.path}/portrait_uncanny.${comic.thumbnail.extension}`;
   //releaseDate
@@ -212,7 +224,7 @@ fetchComicsId = async (comicId) => {
     comic.description
   ); //le paso estos argumento a los params de la fx de mas abajo
   mostrarSeccionDetallesComic();
-  // traerPersonajeDelComicId(characterId)
+  traerPersonajeDelComicId(comicId)
 };
 
 //lo de abajo ver si lo puedo hacer con el dom
@@ -243,58 +255,59 @@ const actualizarDetallesDeComic = (
 // ///////////////////////////////////////////
 // /////////////////////mostrar personajes que participan de ese comic//////////////////////
 
-// const traerPersonajeDelComicId = async (comicId) => {
-//   // console.log('aca van los comics en los que participo') //url + /v1/GET /v1/public/comics/{comicId}/characters
-//   const {
-//     data: {
-//       results, total
-//     }, //traigo estos 2 params desde la data
-//   } = await fetchURL(obtenerURL("comics", comicId, 'characters')); //fx dentro de fx
-//   // const comicDelPersonaje = `${character.comics}`
-//   console.log(results, total)
-//   printPersonajeDelComic(results)
-//   actualizarResultados(total)
-// }
+const traerPersonajeDelComicId = async (comicId) => {
+  // console.log('aca van los comics en los que participo') //url + /v1/GET /v1/public/comics/{comicId}/characters
+  const {
+    // data: { results, total }, //traigo estos 2 params desde la data
+    data: { results, total }, //traigo estos 2 params desde la data
 
-// const personajeDelComic = traerElemento('#personajeDelComic')
+  } = await fetchURL(obtenerURL("comics", comicId, "characters")); //fx dentro de fx
+  // const comicDelPersonaje = `${character.comics}`
+  console.log(results, total); //me trae los personajes del comic, falta cmo ahcer para que se pinten
+  printPersonajeDelComic(results); //me tiraba error en la consola
+  actualizarResultados(total);
+};
 
-// const printPersonajeDelComic = (characters) => {
-//   if (characters.length === 0) {
-//     personajeDelComic.innerHTML =
-//       '<h2 class="sin-resultado">No se encontraron resultados para el pedido</h2>';
-//   }
+const personajeDelComic = traerElemento("#personajeDelComic");
 
-//   //FOR OF ENTRE UN FOR Y UN FOR EACH, SE USA PARA ARREGLOS
-//   //variable iteratora characters/iterator
-//   for (const character of characters) {
-//     console.log(character); //va a traer el objeto por cada comic
-//     const personajeCard = document.createElement("div");
+const printPersonajeDelComic = (characters) => {
+  if (characters.length === 0) {
+    personajeDelComic.innerHTML =
+      '<h2 class="sin-resultado">No se encontraron resultados para el pedido</h2>';
+  }
 
-//     personajeCard.tabIndex = 0;
-//     personajeCard.classList.add("comic");
-//     //le doy un evento
-//     personajeCard.onclick = () => {
-//       console.log(character, character.id);
-//       fetchcharacterId(character.id); //ejecuto esta función para que me de el id de cada comic, la función está mas abajo, le paso el agumento comic y comic id
+  //FOR OF ENTRE UN FOR Y UN FOR EACH, SE USA PARA ARREGLOS
+  //variable iteratora characters/iterator
+  for (const character of characters) {
+    console.log(character); //va a traer el objeto por cada comic
+    const personajeCard = document.createElement("div");
 
-//     };
-//     personajeCard.innerHTML = `
+    personajeCard.tabIndex = 0;
+    personajeCard.classList.add("comic");
+    //le doy un evento
+    personajeCard.onclick = () => {
+      console.log(character, character.id);
+      fetchcharacterId(character.id); //ejecuto esta función para que me de el id de cada comic, la función está mas abajo, le paso el agumento comic y comic id
+    };
+    personajeCard.innerHTML = `
 
-//     <div class="col s12 m3">
-//       <div class="card">
-//         <div class="card-image">
-//           <img src="${character.thumbnail.path}/portrait_uncanny.${character.thumbnail.extension}" alt="${character.name}" class="character-thumbnail">
-//         </div>
-//         <div class="card-content">
-//           <p>Nombre: ${character.name}</p>
-//         </div>
-//       </div>
-//     </div>
+    <div class="col s12 m3">
+      <div class="card">
+        <div class="card-image">
+          <img src="${character.thumbnail.path}/portrait_uncanny.${character.thumbnail.extension}" alt="${character.name}" class="character-thumbnail">
+        </div>
+        <div class="card-content">
+          <p>Nombre: ${character.name}</p>
+        </div>
+      </div>
+    </div>
 
-//     `;
-//     personajeDelComic.append(personajeCard);
-//   }
-// };
+    `;
+    personajeDelComic.append(personajeCard); //me tiraba error
+    // resultsPersonajes.append(personajeCard); //me tiraba error
+
+  }
+};
 
 // ///////////////////////////////////////////
 
@@ -324,7 +337,7 @@ fetchPersonajes = async () => {
   const {
     data: { results, total }, //traigo estos 2 params desde la data
   } = await fetchURL(obtenerURL("characters")); //fx dentro de fx
-  console.log(results, total);
+  // console.log(results, total);
   borrarResults();
   printPersonajes(results);
 
@@ -336,7 +349,7 @@ fetchPersonajes = async () => {
 // //IMPRIMIR PERSONAJES
 //fetchPersonajes(characters, characters.id)
 const resultadoPersonajes = traerElemento("#results");
-console.log(cantidadDeResultados);
+
 
 const printPersonajes = (characters) => {
   if (characters.length === 0) {
@@ -347,7 +360,7 @@ const printPersonajes = (characters) => {
   //'FOR OF' ENTRE UN FOR Y UN FOR EACH, SE USA PARA ARREGLOS
   //variable iteratora personaje/iterator
   for (const character of characters) {
-    console.log(character); //va a traer el objeto por cada personaje
+    // console.log(character); //va a traer el objeto por cada personaje
     const personajeCard = document.createElement("div");
 
     personajeCard.tabIndex = 0;
@@ -376,7 +389,7 @@ const printPersonajes = (characters) => {
 };
 
 fetchPersonaje = async (charactersId) => {
-  console.log(charactersId);
+  // console.log(charactersId);
   const {
     data: {
       results: [character],
@@ -534,6 +547,7 @@ const search = () => {
   if (selectTipo.value === "characters") {
     fetchPersonajes();
   }
+  
 };
 
 //LOADER//

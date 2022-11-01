@@ -94,9 +94,9 @@
       <div class="col s12 m6 l2 valign-wrapper margen">
         <label for=""></label>
         <span class="span">Orden</span>
-        <select class="browser-default selectComic" id="selectOrden">
-          <option id="quieroAZ" value="name">A-Z</option>
-          <option id="quieroZA" value="-name">Z-A</option>
+        <select name="orden" class="browser-default selectComic" id="selectOrden">
+          <option id="quieroAZ" value="title">A-Z</option>
+          <option id="quieroZA" value="-title">Z-A</option>
           <option id="quieroMasViejo" value="-modified">Mas Viejo</option>
           <option id="quieroMasNuevo" value="modified">Mas Nuevo</option>
         </select>
@@ -114,7 +114,7 @@
 
     <div id="contenedorResultados">
       <h5>RESULTADOS</h5>
-      <div id="cantidadDeResultados">
+      <div>
         <span id="numResultado"></span>
         <span>RESULTADOS</span>
       </div>
@@ -151,11 +151,11 @@
 
     <div>
       <h4>Personajes</h4>
-      <div id="cantidadDeResultados">
+      <div>
         <span id="numResultadoPersonajes"></span>
         <span>RESULTADOS</span>
       </div>
-      <div id="resultsPersonajes" class="row"></div>
+      <div id="personajeDelComic" class="row"></div>
     </div>
     </div>
 
@@ -178,7 +178,7 @@
   
       <div>
         <h4>Comics en los que participó este personaje</h4>
-        <div id="cantidadDeResultados">
+        <div>
           <span id="numResultadoPersonajes"></span>
           <span>RESULTADOS</span>
         </div>
@@ -186,18 +186,6 @@
       </div>
       </div>
   
-      <!-- personajeDelComic -->
-      <!-- <div>
-        <h4>Personaje de este comic</h4>
-        <div id="cantidadDeResultados">
-          <span id="numResultadoComic"></span>
-          <span>RESULTADOS</span>
-        </div>
-        <div id="personajeDelComic" class="row"></div>
-      </div>
-      </div>
-   -->
-
       <!--///////////////////////////////////PAGINADOR//////////////////////////////////////-->
     <div class="container-paginador">
       <p>Pagina Actual: <span id="pagina-actual"></span></p>
