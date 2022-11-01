@@ -286,7 +286,6 @@ const printPersonajeDelComic = (characters) => {
     personajeCard.classList.add("comic");
     //le doy un evento
     personajeCard.onclick = () => {
-      console.log(character, character.id);
       fetchcharacterId(character.id); //ejecuto esta función para que me de el id de cada comic, la función está mas abajo, le paso el agumento comic y comic id
     };
     personajeCard.innerHTML = `
@@ -303,9 +302,7 @@ const printPersonajeDelComic = (characters) => {
     </div>
 
     `;
-    personajeDelComic.append(personajeCard); //me tiraba error
-    // resultsPersonajes.append(personajeCard); //me tiraba error
-
+    personajeDelComic.append(personajeCard); 
   }
 };
 
@@ -320,8 +317,6 @@ const mostrarSeccionDetallesComic = () => {
   contenedorResultados.classList.add("esconder");
   return mostrarSeccionDetallesComic;
 };
-
-// console.log(mostrarSeccionDetallesComic)
 
 ///BOTON BUSCAR///
 const btnBuscar = traerElemento("#btn-buscar");
