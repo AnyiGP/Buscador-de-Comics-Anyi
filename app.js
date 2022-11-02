@@ -1,20 +1,10 @@
 const root = document.getElementById("root");
-// const mujer = document.getElementById("mujer");
-// const hombre = document.getElementById("hombre");
 // const todos = document.getElementById("todos");
 const selectTipo = document.querySelector("#selectTipo");
 const selectOrden = document.querySelector("#selectOrden");
 
 //FX PARA TRAER LOS ELEMENTOS, POR EJEMPLO EL SELECT TIPO//
 const traerElemento = (elemento) => document.querySelector(elemento);
-
-// //paginador
-// const paginaActual = document.querySelector("#pagina-actual");
-// const totalPaginas = document.querySelector("#total-paginas");
-// const firstPage = document.querySelector("#first-page");
-// const previusPage = document.querySelector("#previus-page");
-// const nextPage = document.querySelector("#next-page");
-// const lastPage = document.querySelector("#last-page");
 
 // //LOADER
 const loader = document.getElementById("contenedor");
@@ -78,6 +68,9 @@ const obtenerParamDeBusqueda = (isSearch) => {
 
   //esto de acá arriba me da un conflicto con la url me tira error 409
 
+  //paginador
+
+
   return buscarParam;
 };
 
@@ -112,10 +105,15 @@ const actualizarResultados = (count) => {
   resultCount = count; //count es un param/total que le paso como argumento total que se ejecuta mas abajo
 };
 
+
+//TRAE LA DATA DE TODOS LOS COMICS CON UN LIMITE DE 20
+
 const fetchURL = async (url) => {
   const response = await fetch(url);
   const json = await response.json();
+  console.log(json)
   return json; //me trae la data completa, como un objeto
+  
 };
 
 // const tipo = traerElemento("#selectTipo").value;
@@ -543,6 +541,11 @@ const search = () => {
     fetchPersonajes();
   }
   
+  // if (selectOrden.value === "-title") {
+  //   fetchComics();
+  // }
+  
+
 };
 
 //LOADER//
@@ -594,21 +597,46 @@ if (element) {
 
 // //   //NUEVA FUNCION PARA HACER LO DEL PAGINADOR
 
+//paginador
+const paginaActual = document.querySelector("#pagina-actual");
+const totalPaginas = document.querySelector("#total-paginas");
+const firstPage = document.querySelector("#first-page");
+const previusPage = document.querySelector("#previus-page");
+const nextPage = document.querySelector("#next-page");
+const lastPage = document.querySelector("#last-page");
+
+
 // let pagina = 1;
 // let total = 0;
 
+//USO FX DE fetchURL
+
+const paginador = () => {
+  console.log('funciona')
+  nextPage.addEventListener('click', () => {
+    offset += 1
+    console.log(offset)
+    // fetchURL(offset)
+  } )
+}
+
 // const getData2 = async () => {
-//   loader.classList.remove('esconder')
+// //   loader.classList.remove('esconder')
 
-//   const url = `https://rickandmortyapi.com/api/character/?page=${pagina}`;
+// let buscarParam = `?apikey=${apiPublic}&offset=${offset}`;
 
-//   //NUEVA FORMA DE HACER PROMESAS ASYNC AWAIT
-//   paginaActual.innerHTML = pagina;
+// //   const url = `https://rickandmortyapi.com/api/character/?page=${pagina}`;
+
+// //   //NUEVA FORMA DE HACER PROMESAS ASYNC AWAIT
+// //   paginaActual.innerHTML = pagina;
 //   const resp = await fetch(url);
 //   const json = await resp.json();
-//   //ejecutamos la fx print data
+// //   //ejecutamos la fx print data
 //   printData(json.results);
-//   total = json.info.pages;
+// console.log(json)
+// return json
+
+  //   total = json.info.pages;
 //   paginaActual.innerHTML = pagina;
 //   totalPaginas.innerHTML = total;
 //   data = json;
@@ -689,8 +717,70 @@ if (element) {
 
 $(document).ready(function () {
   $(".dropdown-trigger").dropdown();
-  // pagination(getData2());
+  // paginador(fetchURL());
+  paginador()
 });
+
+///////////////////////////////////
+//paginador lore y steff/////////////////
+// const updatePaginationCallback = (callback) => {
+//   firstPage.onclick = () => {
+//     offSet = 0;
+//     currentPage = 1;
+//     callback();
+//     clearResults();
+//   };
+
+//   previousPage.onclick = () => {
+//     offSet -= 20;
+//     currentPage -= 1;
+//     callback();
+//     clearResults();
+//     if (offSet < 0) {
+//       offSet = 0;
+//     }
+//   };
+
+//   nextPage.onclick = () => {
+//     offSet += 20;
+//     currentPage += 1;
+//     callback();
+//     clearResults();
+//   };
+
+//   lastPage.onclick = () => {
+//     const isExact = resultsCount % 20 === 0;
+//     const pages = Math.floor(resultsCount / 20);
+//     offSet = (isExact ? pages - 1 : pages) * 20;
+//     let totalPages = Math.ceil(resultsCount / 20);
+//     currentPage = totalPages;
+//     callback();
+//     clearResults();
+//   };
+// };
+
+// const updatePaginationData = (totalResults) => {
+//   totalPages.innerHTML = `${Math.ceil(totalResults / 20)}`;
+//   currentPageDiv.innerHTML = `${currentPage}`;
+// };
+
+// const updatePagination = () => {
+//   if (offSet === 0) {
+//     firstPage.disabled = true;
+//     previousPage.disabled = true;
+//   } else {
+//     firstPage.disabled = false;
+//     previousPage.disabled = false;
+//   }
+
+//   if (offSet + 20 >= resultsCount) {
+//     lastPage.disabled = true;
+//     nextPage.disabled = true;
+//   } else {
+//     lastPage.disabled = false;
+//     nextPage.disabled = false;
+//   }
+// };
 
 // //Fx CON LA QUE FUNCIONAN LOS FILTROS ES LO MISMO QUE LA DE ARRIBA PERO SIN PAGINADOR, 24-8
 
