@@ -614,7 +614,7 @@ const lastPage = document.querySelector("#last-page");
 const paginador = () => {
   console.log('funciona')
   nextPage.addEventListener('click', () => {
-    offset += 1
+    offset += 
     console.log(offset)
     // fetchURL(offset)
   } )
@@ -723,7 +723,28 @@ $(document).ready(function () {
 
 ///////////////////////////////////
 //paginador lore y steff/////////////////
-// const updatePaginationCallback = (callback) => {
+
+//ejemplo de callback
+const myFx1 = () => { 
+  console.log('anyi')
+  return 'soy FX1 '
+}
+
+const myFx2 = (callback) => { 
+  return 'soy FX2 ' + callback() //este callback es la fx1 y lo paso abajo, invoco al callback con los parentesis
+}
+
+const rta = (myFx2(myFx1)) //paso como param la fx1, pero puedo pasar cualquier par'ametro que necesite para que sea reutilizable
+
+console.log(rta) //soy fx2 soy fx1
+
+// const rta2 = (myFx2(myFx1())) //agregando los parentesis dps de myfx1, no funciona porque le estoy pasando el resultado de una fx
+// console.log(rta2) //soy fx2 soy fx1
+
+// const updatePaginationCallback = (callback) => { //callback es pasar una función como parámetro, q param le tendría que pasar? los resultados de la api?
+
+//console.log(callback)
+
 //   firstPage.onclick = () => {
 //     offSet = 0;
 //     currentPage = 1;
@@ -748,13 +769,14 @@ $(document).ready(function () {
 //     clearResults();
 //   };
 
+//fx para la ultima pagina
 //   lastPage.onclick = () => {
 //     const isExact = resultsCount % 20 === 0;
-//     const pages = Math.floor(resultsCount / 20);
+//     const pages = Math.floor(resultsCount / 20); //divido total de resultados por 20
 //     offSet = (isExact ? pages - 1 : pages) * 20;
 //     let totalPages = Math.ceil(resultsCount / 20);
 //     currentPage = totalPages;
-//     callback();
+//     callback(); //invoca a callback y pasa el parámetro que debe ser otra función 
 //     clearResults();
 //   };
 // };
@@ -781,6 +803,8 @@ $(document).ready(function () {
 //     nextPage.disabled = false;
 //   }
 // };
+
+//updatePaginationCallback() //que fx se ejecuta para pasarle al callback? fx(pramCallback)
 
 // //Fx CON LA QUE FUNCIONAN LOS FILTROS ES LO MISMO QUE LA DE ARRIBA PERO SIN PAGINADOR, 24-8
 
