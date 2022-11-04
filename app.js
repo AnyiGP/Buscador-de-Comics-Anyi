@@ -721,10 +721,9 @@ $(document).ready(function () {
   paginador()
 });
 
-///////////////////////////////////
-//paginador lore y steff/////////////////
+//paginador lore y steff//
 
-//ejemplo de callback
+//ejemplo de callback//
 const myFx1 = () => { 
   console.log('anyi')
   return 'soy FX1 '
