@@ -70,7 +70,6 @@ const obtenerParamDeBusqueda = (isSearch) => {
 
   //paginador
 
-
   return buscarParam;
 };
 
@@ -105,15 +104,13 @@ const actualizarResultados = (count) => {
   resultCount = count; //count es un param/total que le paso como argumento total que se ejecuta mas abajo
 };
 
-
 //TRAE LA DATA DE TODOS LOS COMICS CON UN LIMITE DE 20
 
 const fetchURL = async (url) => {
   const response = await fetch(url);
   const json = await response.json();
-  console.log(json)
+  console.log(json);
   return json; //me trae la data completa, como un objeto
-  
 };
 
 // const tipo = traerElemento("#selectTipo").value;
@@ -202,7 +199,7 @@ fetchComicsId = async (comicId) => {
     }, //traigo estos 2 params desde la data
   } = await fetchURL(obtenerURL("comics", comicId)); //fx dentro de fx
   // console.log(comic);
-  
+
   //CARGAMOS LA URL PARA TRAER LA IMAGEN A LA TARJETA QUE DETALLA LA INFO coverPath
   const imgComic = `${comic.thumbnail.path}/portrait_uncanny.${comic.thumbnail.extension}`;
   //releaseDate
@@ -222,7 +219,7 @@ fetchComicsId = async (comicId) => {
     comic.description
   ); //le paso estos argumento a los params de la fx de mas abajo
   mostrarSeccionDetallesComic();
-  traerPersonajeDelComicId(comicId)
+  traerPersonajeDelComicId(comicId);
 };
 
 //lo de abajo ver si lo puedo hacer con el dom
@@ -258,7 +255,6 @@ const traerPersonajeDelComicId = async (comicId) => {
   const {
     // data: { results, total }, //traigo estos 2 params desde la data
     data: { results, total }, //traigo estos 2 params desde la data
-
   } = await fetchURL(obtenerURL("comics", comicId, "characters")); //fx dentro de fx
   // const comicDelPersonaje = `${character.comics}`
   console.log(results, total); //me trae los personajes del comic, falta cmo ahcer para que se pinten
@@ -300,7 +296,7 @@ const printPersonajeDelComic = (characters) => {
     </div>
 
     `;
-    personajeDelComic.append(personajeCard); 
+    personajeDelComic.append(personajeCard);
   }
 };
 
@@ -342,7 +338,6 @@ fetchPersonajes = async () => {
 // //IMPRIMIR PERSONAJES
 //fetchPersonajes(characters, characters.id)
 const resultadoPersonajes = traerElemento("#results");
-
 
 const printPersonajes = (characters) => {
   if (characters.length === 0) {
@@ -540,12 +535,10 @@ const search = () => {
   if (selectTipo.value === "characters") {
     fetchPersonajes();
   }
-  
+
   // if (selectOrden.value === "-title") {
   //   fetchComics();
   // }
-  
-
 };
 
 //LOADER//
@@ -555,7 +548,6 @@ setTimeout(() => {
   results.classList.remove("esconder");
 }, 2000);
 
-//2.37hs
 //INICIO//
 const inicio = () => {
   btnBuscar.addEventListener("click", () => {
@@ -595,9 +587,8 @@ if (element) {
 //cuando el usuario le de click al btn avanzar solo una pagina, le paso como offset 19 y vuelvo a ejecutar la función de getSearchParams u obtener parametros de búsqueda
 //para el btn que me lleve a la ultima página, debemos hacer que me divida la cantidad de resultados por 20 para que me de la cantidad de las páginas
 
-// //   //NUEVA FUNCION PARA HACER LO DEL PAGINADOR
+//PAGINADOR
 
-//paginador
 const paginaActual = document.querySelector("#pagina-actual");
 const totalPaginas = document.querySelector("#total-paginas");
 const firstPage = document.querySelector("#first-page");
@@ -605,20 +596,18 @@ const previusPage = document.querySelector("#previus-page");
 const nextPage = document.querySelector("#next-page");
 const lastPage = document.querySelector("#last-page");
 
-
 // let pagina = 1;
 // let total = 0;
 
 //USO FX DE fetchURL
 
 const paginador = () => {
-  console.log('funciona')
-  nextPage.addEventListener('click', () => {
-    offset += 
-    console.log(offset)
+  console.log("funciona");
+  nextPage.addEventListener("click", () => {
+    offset += console.log(offset);
     // fetchURL(offset)
-  } )
-}
+  });
+};
 
 // const getData2 = async () => {
 // //   loader.classList.remove('esconder')
@@ -636,7 +625,7 @@ const paginador = () => {
 // console.log(json)
 // return json
 
-  //   total = json.info.pages;
+//   total = json.info.pages;
 //   paginaActual.innerHTML = pagina;
 //   totalPaginas.innerHTML = total;
 //   data = json;
@@ -718,24 +707,24 @@ const paginador = () => {
 $(document).ready(function () {
   $(".dropdown-trigger").dropdown();
   // paginador(fetchURL());
-  paginador()
+  paginador();
 });
 
-//paginador lore y steff//
+//PAGINADOR CON CALLBACK//
 
 //ejemplo de callback//
-const myFx1 = () => { 
-  console.log('anyi')
-  return 'soy FX1 '
-}
+const myFx1 = () => {
+  console.log("anyi");
+  return "soy FX1 ";
+};
 
-const myFx2 = (callback) => { 
-  return 'soy FX2 ' + callback() //este callback es la fx1 y lo paso abajo, invoco al callback con los parentesis
-}
+const myFx2 = (callback) => {
+  return "soy FX2 " + callback(); //este callback es la fx1 y lo paso abajo, invoco al callback con los parentesis
+};
 
-const rta = (myFx2(myFx1)) //paso como param la fx1, pero puedo pasar cualquier par'ametro que necesite para que sea reutilizable
+const rta = myFx2(myFx1); //paso como param la fx1, pero puedo pasar cualquier par'ametro que necesite para que sea reutilizable
 
-console.log(rta) //soy fx2 soy fx1
+console.log(rta); //soy fx2 soy fx1
 
 // const rta2 = (myFx2(myFx1())) //agregando los parentesis dps de myfx1, no funciona porque le estoy pasando el resultado de una fx
 // console.log(rta2) //soy fx2 soy fx1
@@ -775,7 +764,7 @@ console.log(rta) //soy fx2 soy fx1
 //     offSet = (isExact ? pages - 1 : pages) * 20;
 //     let totalPages = Math.ceil(resultsCount / 20);
 //     currentPage = totalPages;
-//     callback(); //invoca a callback y pasa el parámetro que debe ser otra función 
+//     callback(); //invoca a callback y pasa el parámetro que debe ser otra función
 //     clearResults();
 //   };
 // };
@@ -803,44 +792,8 @@ console.log(rta) //soy fx2 soy fx1
 //   }
 // };
 
-//updatePaginationCallback() //que fx se ejecuta para pasarle al callback? fx(pramCallback)
-
-// //Fx CON LA QUE FUNCIONAN LOS FILTROS ES LO MISMO QUE LA DE ARRIBA PERO SIN PAGINADOR, 24-8
-
-// // const getData = async () => {
-// //   const url = 'https://rickandmortyapi.com/api/character/'; //parametros que le pasamos a la api
-// //   //promesa que tiene estado dependiente
-// //   fetch(url)
-// //     .then((resp) => resp.json())
-// //     .then((json) => {
-// //       printData(json.results); // []
-// //       data = json;
-// //     }) //respuesta primera
-// //     .catch((err) => console.error(err)); //error
-// //   }
-
-// // //////////FILTROS///////////////
-
-// mujer.addEventListener("click", (e) => {
-//   const female = data.results.filter(
-//     (personaje) => personaje.gender === "Female"
-//   );
-//   printData(female); // []
-//   // console.log(data);
-//   console.log(female);
-// });
-
-// hombre.addEventListener("click", (e) => {
-//   const male = data.results.filter((personaje) => personaje.gender === "Male");
-//   printData(male); // []
-//   // console.log(data);
-//   console.log(male);
-// });
-
-// todos.addEventListener("click", (e) => {
-//   const mostrarTodos = data.results;
-//   printData(mostrarTodos); // []
-// });
+//updatePaginationCallback() //que fx se ejecuta para pasarle al callback
+// fx(pramCallback)
 
 // /////////////PAGINATION FUNCION
 
