@@ -284,7 +284,7 @@ const printPersonajeDelComic = (characters) => {
     personajeCard.classList.add("comic");
     //le doy un evento
     personajeCard.onclick = () => {
-      fetchcharacterId(character.id); //ejecuto esta función para que me de el id de cada comic, la función está mas abajo, le paso el agumento comic y comic id
+      fetchCharacterId(character.id); //ejecuto esta función para que me de el id de cada comic, la función está mas abajo, le paso el agumento comic y comic id
     };
     personajeCard.innerHTML = `
 
