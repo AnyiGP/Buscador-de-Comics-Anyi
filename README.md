@@ -60,3 +60,6 @@ Te dejo el link para que visites mi sitio [Proyecto Final Modulo 5](https://anyi
 
 
 
+## Corrección
+
+- Aprendiendo javascript, es pecado usar jquery.

@@ -34,41 +34,10 @@ const obtenerParamDeBusqueda = (isSearch) => {
     buscarParam += `&titleStartsWith=${autocompleteInput.value}`; //saco de la cocumentación
   }
 
-  //Selecciona personajes, agrega nombre personaje, busca personaje//
 
   if (selectTipo.value === "characters") {
     buscarParam += `&nameStartsWith=${autocompleteInput.value}`; //saco de la cocumentación
   }
-
-  //////////////////////////////////////////////////////////////////////////
-
-  // if (!selectOrden.value.length) {
-  //   return buscarParam;
-  // }
-
-  // //hacer otro if con el value del selec de ordenar por A-Z//
-  // if (selectOrden.value === "name") {
-  //   buscarParam += `&orderBy=${selectOrden.value}`; //saco de la cocumentación
-  // }
-
-  // //hacer otro if con el value del selec de ordenar por Z-A//
-  // if (selectOrden.value === "-name") {
-  //   buscarParam += `&orderBy=${selectOrden.value}`; //saco de la cocumentación
-  // }
-
-  // //hacer otro if con el value del selec de ordenar por Mas Viejo//
-  // if (selectOrden.value === "-modified") {
-  //   buscarParam += `&orderBy=${selectOrden.value}`; //saco de la cocumentación
-  // }
-
-  // //hacer otro if con el value del selec de ordenar por Mas Viejo//
-  // if (selectOrden.value === "modified") {
-  //   buscarParam += `&orderBy=${selectOrden.value}`; //saco de la cocumentación
-  // }
-
-  //esto de acá arriba me da un conflicto con la url me tira error 409
-
-  //paginador
 
   return buscarParam;
 };
@@ -468,65 +437,11 @@ const printComicsDelPersonaje = (comics) => {
   }
 };
 
-//AGREGAR UNA FX QUE AL SELECCIONAR EL COMIC DEL PERSONAJE ME LLEVE A ESE COMIC Y ME MUESTRE LOS PEROSNAJES DE ESE COMIC
-
-//AGREGAR UNA FX QUE AL SELECCIONAR EL PERSONAJE DEL COMIC ME LLEVE A ESE PERSONAJE Y ME MUESTRE LOS COMICS DE ESE PERSONAJE
-
-//AGREGAR UNA FUNCIÓN QUE QUE AL SELECCIONAR NUEVAMENTE EN EL SELEC COMIC ME VUELVA A MOSTRAR LA SECCIÓN DE COMIC
-
 const mostrarSeccionDetallesPersonaje = () => {
   seccionDetallesPersonaje.classList.remove("esconder");
   contenedorResultados.classList.add("esconder");
   return mostrarSeccionDetallesComic;
 };
-
-// console.log(mostrarSeccionDetallesComic)
-
-//FILTROS
-//hacer una copia del arr de los comics y ordenarlos con el sort o usar el orderBy como parámetro que ya trae la api de marvel
-
-// const ordenarPor = document.getElementById("ordenar-por");
-
-// ordenarPor.addEventListener("change", () => {
-
-//A/Z
-
-// if (ordenarPor.value === "a-z") {
-//   operaciones.sort((a, b) => {
-//     if (a.descripcion.toLowerCase() < b.descripcion.toLowerCase()) {
-//       return -1;
-//     }
-//     if (a.descripcion.toLowerCase() > b.descripcion.toLowerCase()) return 1;
-//   });
-// }
-// pintarOperaciones(operaciones);
-
-// //Z/A
-
-// if (ordenarPor.value === "z-a") {
-//   operaciones.sort((a, b) => {
-//     if (a.descripcion.toLowerCase() > b.descripcion.toLowerCase()) {
-//       return -1;
-//     }
-//     if (a.descripcion.toLowerCase() < b.descripcion.toLowerCase()) return 1;
-//   });
-// }
-// pintarOperaciones(operaciones);
-//ORDENAR POR
-
-//MAS RECIENTE
-// if (ordenarPor.value === "mas-reciente") {
-//   operaciones.sort((a, b) => new Date(b.fecha) - new Date(a.fecha));
-// }
-// pintarOperaciones(operaciones);
-
-// //MENOS RECIENTE
-// if (ordenarPor.value === "menos-reciente") {
-//   operaciones.sort((a, b) => new Date(a.fecha) - new Date(b.fecha));
-// }
-// pintarOperaciones(operaciones);
-
-// });
 
 const search = () => {
   if (selectTipo.value === "comics") {
@@ -584,9 +499,6 @@ if (element) {
   );
 }
 
-//cuando el usuario le de click al btn avanzar solo una pagina, le paso como offset 19 y vuelvo a ejecutar la función de getSearchParams u obtener parametros de búsqueda
-//para el btn que me lleve a la ultima página, debemos hacer que me divida la cantidad de resultados por 20 para que me de la cantidad de las páginas
-
 //PAGINADOR
 
 const paginaActual = document.querySelector("#pagina-actual");
@@ -596,113 +508,16 @@ const previusPage = document.querySelector("#previus-page");
 const nextPage = document.querySelector("#next-page");
 const lastPage = document.querySelector("#last-page");
 
-// let pagina = 1;
-// let total = 0;
 
 //USO FX DE fetchURL
 
-const paginador = () => {
+const  paginador = () => {
   console.log("funciona");
   nextPage.addEventListener("click", () => {
     offset += console.log(offset);
     // fetchURL(offset)
   });
 };
-
-// const getData2 = async () => {
-// //   loader.classList.remove('esconder')
-
-// let buscarParam = `?apikey=${apiPublic}&offset=${offset}`;
-
-// //   const url = `https://rickandmortyapi.com/api/character/?page=${pagina}`;
-
-// //   //NUEVA FORMA DE HACER PROMESAS ASYNC AWAIT
-// //   paginaActual.innerHTML = pagina;
-//   const resp = await fetch(url);
-//   const json = await resp.json();
-// //   //ejecutamos la fx print data
-//   printData(json.results);
-// console.log(json)
-// return json
-
-//   total = json.info.pages;
-//   paginaActual.innerHTML = pagina;
-//   totalPaginas.innerHTML = total;
-//   data = json;
-//   updatePagination();
-//   setTimeout(() => {
-//     loader.classList.add('esconder')
-//     root.classList.remove('esconder')
-//   },1000)
-//   return json;
-// };
-
-// let data = [];
-
-// const printData = (json) => {
-//   // console.log(json); //  []
-//   const arr = json;
-//   let card = "";
-//   arr.forEach((personaje) => {
-//     const { name, gender, species, status, origin, location, image } =
-//       personaje;
-//     card += `
-//       <div class="col s12 m6 l3">
-//         <div class="card">
-//           <div class="card-image">
-//             <img src=${image} alt=${name}>
-//           </div>
-//           <div class="card-content">
-//             <p>Nombre: ${name}</p>
-//             <p>Genero: ${gender}</p>
-//             <p>Species: ${species}</p>
-//             <p>Status: ${status}</p>
-//             <p>Origin: ${origin.name}</p>
-//             <p>Location: ${location.name}</p>
-//           </div>
-//           <div class="card-action">
-//             <a href="#">ver mas...</a>
-//           </div>
-//         </div>
-//       </div>
-//     `;
-//   });
-//   root.innerHTML = card;
-// };
-
-// const printData = (json) => {
-//   // console.log(json); //  []
-//   const arr = json;
-//   let card = "";
-//   arr.forEach((personaje) => {
-//     const { name, gender, species, status, origin, location, thumbnail } =
-//       personaje;
-//     card += `
-//       <div class="col s12 m6 l3">
-//         <div class="card">
-//           <div class="card-image">
-//             <img src=${thumbnail.path}${thumbnail.extension} alt=${name}>
-//           </div>
-//           <div class="card-content">
-//             <p>Nombre: ${name}</p>
-//             <p>Genero: ${gender}</p>
-//             <p>Species: ${species}</p>
-//             <p>Status: ${status}</p>
-//             <p>Origin: ${origin.name}</p>
-//             <p>Location: ${location.name}</p>
-//           </div>
-//           <div class="card-action">
-//             <a href="#">ver mas...</a>
-//           </div>
-//         </div>
-//       </div>
-//     `;
-//   });
-//   root.innerHTML = card;
-//   console.log(card);
-// };
-
-// console.log(printData);
 
 $(document).ready(function () {
   $(".dropdown-trigger").dropdown();
@@ -722,124 +537,4 @@ const myFx2 = (callback) => {
   return "soy FX2 " + callback(); //este callback es la fx1 y lo paso abajo, invoco al callback con los parentesis
 };
 
-const rta = myFx2(myFx1); //paso como param la fx1, pero puedo pasar cualquier par'ametro que necesite para que sea reutilizable
-
-console.log(rta); //soy fx2 soy fx1
-
-// const rta2 = (myFx2(myFx1())) //agregando los parentesis dps de myfx1, no funciona porque le estoy pasando el resultado de una fx
-// console.log(rta2) //soy fx2 soy fx1
-
-// const updatePaginationCallback = (callback) => { //callback es pasar una función como parámetro, q param le tendría que pasar? los resultados de la api?
-
-//console.log(callback)
-
-//   firstPage.onclick = () => {
-//     offSet = 0;
-//     currentPage = 1;
-//     callback();
-//     clearResults();
-//   };
-
-//   previousPage.onclick = () => {
-//     offSet -= 20;
-//     currentPage -= 1;
-//     callback();
-//     clearResults();
-//     if (offSet < 0) {
-//       offSet = 0;
-//     }
-//   };
-
-//   nextPage.onclick = () => {
-//     offSet += 20;
-//     currentPage += 1;
-//     callback();
-//     clearResults();
-//   };
-
-//fx para la ultima pagina
-//   lastPage.onclick = () => {
-//     const isExact = resultsCount % 20 === 0;
-//     const pages = Math.floor(resultsCount / 20); //divido total de resultados por 20
-//     offSet = (isExact ? pages - 1 : pages) * 20;
-//     let totalPages = Math.ceil(resultsCount / 20);
-//     currentPage = totalPages;
-//     callback(); //invoca a callback y pasa el parámetro que debe ser otra función
-//     clearResults();
-//   };
-// };
-
-// const updatePaginationData = (totalResults) => {
-//   totalPages.innerHTML = `${Math.ceil(totalResults / 20)}`;
-//   currentPageDiv.innerHTML = `${currentPage}`;
-// };
-
-// const updatePagination = () => {
-//   if (offSet === 0) {
-//     firstPage.disabled = true;
-//     previousPage.disabled = true;
-//   } else {
-//     firstPage.disabled = false;
-//     previousPage.disabled = false;
-//   }
-
-//   if (offSet + 20 >= resultsCount) {
-//     lastPage.disabled = true;
-//     nextPage.disabled = true;
-//   } else {
-//     lastPage.disabled = false;
-//     nextPage.disabled = false;
-//   }
-// };
-
-//updatePaginationCallback() //que fx se ejecuta para pasarle al callback
-// fx(pramCallback)
-
-// /////////////PAGINATION FUNCION
-
-// const pagination = async (promesa) => {
-//   const result = await promesa;
-//   console.log(result);
-//   //pag sgte
-//   nextPage.addEventListener("click", () => {
-//     pagina += 1;
-//     getData2();
-//   });
-//   //pagina previa
-//   previusPage.addEventListener("click", () => {
-//     pagina -= 1;
-//     getData2();
-//   });
-//   //ultima pagina que entre a la data
-//   console.log(promesa);
-//   lastPage.addEventListener("click", () => {
-//     if (pagina <= result.info.pages) {
-//       pagina = result.info.pages;
-//       getData2();
-//     }
-//   });
-//   firstPage.addEventListener("click", () => {
-//     if (pagina >= 2) {
-//       pagina = 1;
-//       getData2();
-//     }
-//   });
-// };
-
-// const updatePagination = () => {
-//   //actualiza
-//   if (pagina <= 1) {
-//     previusPage.disabled = true;
-//     firstPage.disabled = true;
-//   } else {
-//     previusPage.disabled = false;
-//     firstPage.disabled = false;
-//   }
-//   if (pagina == total) {
-//     nextPage.disabled = true;
-//     lastPage.disabled = true;
-//   } else {
-//     nextPage.disabled = false;
-//     lastPage.disabled = false;
-//   }
-// };
+const rta = myFx2(myFx1); //paso como param la fx1, pero 
